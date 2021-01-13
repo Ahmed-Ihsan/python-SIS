@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sia.css') }}">
+  
+    </head>
+    <body>
+
+       <center><div style="width: 60%; ">
+          <form action = "/post" method = "POST" enctype = "multipart/form-data">
+             <div class="custom-file">
+          <input type="file" class="custom-file-input" name ="file" id="customFile">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+          <div class="form-group">
+        <label for="inputAddress2">Title</label>
+        <input type="text" class="form-control" id="inputAddress2" name="Title" >
+      </div>
+       <div class="form-group">
+        <label for="inputAddress2">Text</label>
+        <input type="text" class="form-control" id="inputAddress2" name="text" >
+      </div>
+      <div class="form-row">
+        
+        <div class="form-group col-md-6">
+          <input type="hidden" id="department" name="department" >
+          <input type="hidden" id="id" name="id" >
+             <script>
+                var room=sessionStorage.getItem("department");
+                var roomu=sessionStorage.getItem("id");
+                document.querySelector('#department').value=room;
+                document.querySelector('#id').value=roomu;
+                 window.alert("{{e}}")
+            </script>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+
+         </div></center>
+
+    </body>
+</html>

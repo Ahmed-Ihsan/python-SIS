@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <style>
+          input{
+            text-align: right;
+          }
+        </style>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
+       <style >
+        body{
+         background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
+       }
+       </style>
+  
+    </head>
+    <body id="e1" style="height: 100%; width: 100%">
+
+<center>
+  <div style="max-width: 85%; margin-top: 5%;text-align: right;">
+    <table class="table table-dark" >
+      <thead>
+        <tr>
+          <th scope="col">اسمم الاستاذ</th>
+          <th scope="col">^</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for n in info_fil %}
+        <tr>
+          <td>{{n.name}}</td>
+          <th scope="row">></th>
+        </tr>
+         {% endfor %}
+         
+      </tbody>
+    </table>
+  </div>
+</center>
+
+
+  </body>
+
+</html>

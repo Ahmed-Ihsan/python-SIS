@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/st_sys.css') }}">
+
+
+    </head>
+    <body>
+        
+        <div  class="login2 inst" style="margin-left: auto;margin-top: -80px; margin-right: auto; width:47%;">
+            
+            <center><h2 id="h2" style="color:#ffff;"></h2></center>
+       <form action = "/unit" method = "POST" enctype = "multipart/form-data">
+        <input type="hidden" id="department" name="department" >
+            <script> 
+                var room=sessionStorage.getItem("department");
+                document.querySelector('#department').value=room;
+                window.alert("{{e}}")
+            </script>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name ="file" id="customFile">
+          <label class="custom-file-label" for="customFile">Choose {{all_data}} file</label>
+        </div>
+        <!--<input type = "file"  name ="file" class="btn btn-primary btn-block btn-large" />-->
+         <input type = "text" name = "bookname" placeholder="Book number" required="required"/>
+         <input type = "text" name = "Title" placeholder="Title" required="required"/><br>
+             <select name="type_si" class="btn btn-primary btn-block btn-large" >
+                <option value="send">صادرة</option>
+                <option value="import">وارد</option>
+              </select>
+              <select name ="department"class="btn btn-primary btn-block btn-large" >
+                <option value="computer">option 1</option>
+                <option value="computer">option 2</option>
+                <option value="computer">option 3</option>
+                <option value="computer">option 4</option>
+                <option value="computer">option 5</option>
+                <option value="computer">option 6</option>
+              </select>
+               <select name ="type"class="btn btn-primary btn-block btn-large" >
+                 <option value="insert">Add</option>
+                 <option value="upload">updata</option>
+                 <option value="delete">delete</option>
+                 <option value="search">search</option>
+              </select>
+         <button type="submit" class="btn btn-primary btn-block btn-large">submit</button>
+         </form>
+            </div>
+            <br>
+            <div style="margin-left: -20px; width:47% ; height: 100%; margin-top: -20px">
+               <!-- <iframe src="{{ url_for('static', filename='upload_file/start.pdf') }}" width="100%" height="100%">
+    </iframe>-->
+               <embed style="width:100% ; height: 100% ;" src="{{ url_for('static', filename='upload_file/start.pdf') }}" type="application/pdf"></div>
+           
+         {{e}}{{all_data}}
+         
+    
+    </body>
+</html>

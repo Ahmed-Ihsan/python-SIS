@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  color:blue;
+  background-color: black;
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+td , h1{
+	color:red;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sia.css') }}">
+  
+    </head>
+    <body><br>
+    	<center><h1>معلومات الطلبة</h1></center>
+    	<br>
+    	<center> <form action = "/SIS" method = "POST" enctype = "multipart/form-data">
+      <input type="text" placeholder="Search.." name="search">
+      <button type="submit"><i class="fa fa-search">search</i></button>
+    </form>
+    	<br>
+         <div>
+         	<center>
+<table>
+			  <tr>
+			  	<th>student name</th>
+			  	<th>class_1</th>
+			  	<th>class_2</th>
+			  	<th>class_3</th>
+			  	<th>class_4</th>
+			  	<th>class_5</th>
+			  	<th>class_6</th>
+			  	<th>class_7</th>
+			  	<th>class_8</th>
+          <th>department</th>
+			  </tr>
+			    {% for n in student %}
+			    <tr>
+			    <td>{{n.student_name}}</td>
+			    <td>{{n.class_1}}</td>
+			    <td>{{n.class_2}}</td>
+			    <td>{{n.class_3}}</td>
+			    <td>{{n.class_4}}</td>
+			    <td>{{n.class_5}}</td>
+			    <td>{{n.class_6}}</td>
+			    <td>{{n.class_7}}</td>
+			    <td>{{n.class_8}}</td>
+          <td>{{n.department}}</td>
+			     </tr>
+			    {% endfor %}
+			</table>
+			</center>
+
+         </div>
+    </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <style>
+
+</style>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
+       <style >
+        body{
+         background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
+       }
+       </style>
+  
+    </head>
+    <body id="e1" style="height: 100%; width: 100%">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+  <a class="navbar-brand" href="/">SIS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/login">تسجيل الدخول<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/SIA">اضافة معلومات الطالب</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/SIS">عرض معلومات الطلاب</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/SDI">درجات الطلاب</a>
+      </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/SDId">اضافة درجات الطلاب</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/SDId">اضافة درجات الطلاب</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">هندسة تقنيات الحاسوب</div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function1()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">طب الاسنان</div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function2()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">هندسة تقنيات الاجهزة الطبية </div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function3()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">العربي</div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function4()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">القانون</div>
+  <div class="card-body">
+    <h5 class="card-title"><button   class="btn btn-secondary" onclick="Function5()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">الاسلامية</div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function6()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+  <center><div class="card-header">تحليلات</div>
+  <div class="card-body">
+    <h5 class="card-title"><button type="button"  class="btn btn-secondary " onclick="Function7()">انتقل</button></center></h5>
+    <p class="card-text"></p>
+  </div>
+</div>
+</div>
+
+ <div >
+
+  
+  </div>
+            <script>
+
+                function Function1() {
+                  window.open("http://127.0.0.1:5000/tools/هندسة تقنيات الحاسوب");
+                }
+                function Function2() {
+                  window.open("http://127.0.0.1:5000/tools/طب الاسنان");
+                }
+                function Function3() {
+                  window.open("http://127.0.0.1:5000/tools/هندسة تقنيات الاجهزة الطبية ");
+                }
+                function Function4() {
+                  window.open("http://127.0.0.1:5000/tools/العربي");
+                }
+                function Function5() {
+                  window.open("http://127.0.0.1:5000/tools/القانون");
+                }
+                function Function6() {
+                  window.open("http://127.0.0.1:5000/tools/الاسلامية");
+                }
+                function Function7() {
+                  window.open("http://127.0.0.1:5000/tools/تحليلات");
+                }
+               
+                var room=sessionStorage.getItem("department");
+                document.getElementById("h2").innerHTML = room;
+                document.getElementById("department").value= room;
+                window.alert(room)
+            </script>
+
+    </body>
+
+</html>

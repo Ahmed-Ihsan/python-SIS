@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/cover.css') }}">
+
+         <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+
+    </head>
+    <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand" >SIS</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" href="http://127.0.0.1:5000/login">تسجيل الدخول</a>
+        <a class="nav-link" href="http://hiuc.edu.iq">كلية الحكمة الجامعة</a>
+        <a class="nav-link" href="#">نظام ادارة معلومات الطلاب</a>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">student information system</h1>
+    <p class="lead">SIS is UMass Lowell's student information system and is used for everything from registering for classes, paying your bill, or viewing your financial aid package.</p>
+    <p class="lead">
+      <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+    </p>
+  </main>
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Cover template for <a href="https://getbootstrap.com/">SIS</a>, by <a href="https://twitter.com/mdo">Ahmed Ihsan</a>.</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

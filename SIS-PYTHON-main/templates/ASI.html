@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sia.css') }}">
+  
+    </head>
+    <body>
+         <div style="width: 50%; margin-left: 25%;">
+         	<form action = "/SIA" method = "POST" enctype = "multipart/form-data">
+         	<div class="form-group">
+		    <label for="inputAddress2">الاسم الاول</label>
+		    <input type="text" class="form-control" id="inputAddress2" name="firstname" >
+		  </div>
+		   <div class="form-group">
+		    <label for="inputAddress2">الاسم الثاني</label>
+		    <input type="text" class="form-control" id="inputAddress2" name="lestname" >
+		  </div>
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label for="inputEmail4">البريد الالكتروني</label>
+		      <input type="email" class="form-control" id="inputEmail4" name="Email">
+		    </div>
+		    <div class="form-group col-md-6">
+		      <label for="inputPassword4">رقم الهاتف</label>
+		      <input type="number" class="form-control" id="inputPassword4" name="phonenumber">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputAddress">العنوان</label>
+		    <input type="text" class="form-control" id="inputAddress" name="Address" >
+		  </div>
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label for="inputCity">المحافضة</label>
+		      <input type="text" class="form-control" id="inputCity" name="City">
+		    </div>
+		    <div class="form-group col-md-4">
+		      <label for="inputState">المرحلة</label>
+		      <select id="inputState" name="level" class="form-control">
+		        <option selected>اختر</option>
+		        <option>الاولى</option>
+		        <option>الثانية</option>
+		        <option>الثالثة</option>
+		        <option>الرابعة</option>
+		      </select>
+		    </div>
+		  </div>
+		   <input type="hidden" id="department" name="department" >
+            <script>
+                var room=sessionStorage.getItem("department");
+                document.querySelector('#department').value=room;
+                 window.alert(room)
+            </script>
+		  <div class="form-group">
+		    <div class="form-check">
+		      <input class="form-check-input" name="true" type="checkbox" id="gridCheck">
+		      <label class="form-check-label" for="gridCheck">
+		        تاكيد
+		      </label>
+		    </div>
+		  </div>
+		  <center>
+		  <button style="width: 30%;" type="submit" class="btn btn-primary">ارسال</button>
+		  </center>
+		</form>
+
+         </div>
+    </body>
+</html>

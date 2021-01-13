@@ -1,0 +1,53 @@
+
+#e2{
+   opacity: 0.9;
+   padding-top: : 2%;
+   background-color: #ffff;
+   color: #ffff;
+   width: 25%;
+   height:91%;
+   margin-left: -25px;
+}
+#tit{
+  width:45%;
+  margin-left: 38%;
+  margin-top: -30%;
+}
+h1{
+  color: #ffff;
+}
+h1:hover{
+  color:red;
+}
+a:hover{
+  font-size: 120%;
+  
+  text-decoration: none;
+}
+
+a:link{
+  
+  text-decoration: none;
+}
+
+a , a:active {
+  text-decoration: none;
+}
+
+
+#e3{
+  width: 100%;
+ padding-top:3%;
+ padding-bottom:3%;
+ padding-left:10%;
+}
+#e3:hover{
+ color:#ffff;
+ background-color: green;
+ font-size: 120%;
+ padding-top: 5%;
+ padding-bottom: 5%;
+}
+#image{
+
+}

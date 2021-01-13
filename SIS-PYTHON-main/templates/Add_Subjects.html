@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <style>
+
+</style>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
+       <style >
+        body{
+         background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
+       }
+       </style>
+  
+    </head>
+    <body id="e1" style="height: 100%; width: 100%">
+<center>
+<div style="width:45%; margin-top: 10%">
+    <form action = "/ADD_Subjects" method = "POST" enctype = "multipart/form-data">
+  <div class="form-group">
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="nameSubjects" type="text" placeholder="اسم المادة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="Day" type="text" placeholder="ايام العطل"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="teacher" type="text" placeholder="استاذ المادة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="department" type="text" placeholder="القسم"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="level" type="text" placeholder="المرحلة"><
+  </div>
+  <button type="submit" class="btn btn-primary">ارسل</button>
+</form>
+</div>
+</center>
+
+  </body>
+
+</html>

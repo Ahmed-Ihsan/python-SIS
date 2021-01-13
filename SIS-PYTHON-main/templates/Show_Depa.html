@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <style>
+          th , tr {
+            text-align: right;
+          }
+        </style>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  
+        <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" > -->
+       <style >
+        body{
+         background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
+       }
+       </style>
+  
+    </head>
+    <body id="e1" style="height: 100%; width: 100%">
+      <br>
+<h1 style="left: 100% ;text-align: center;color:#fff">{{inf_dep[0]}}</h1>
+
+<br>
+
+<center>
+  <div style="width: 85%;">
+  <div class="card-deck" >
+    <div class="card" >
+      <div class="card-body">
+        <h5 class="card-title"><button type="button"   onclick="Function()" class="btn btn-success"> انتقل</button></h5>
+        <p class="card-text">البريد الوارد و الصادر</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><button type="button"  onclick="Function1()" class="btn btn-success"> انتقل</button></h5>
+        <p class="card-text">اضافة معلومات طالب </p>
+        
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><button type="button"  onclick="Function2()" class="btn btn-success"> انتقل</button></h5>
+        <p class="card-text">البحث عن معلومات الطلاب</p>
+        
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><button type="button"  onclick="Function3()" class="btn btn-success"> انتقل</button></h5>
+        <p class="card-text">معلومات القسم</p>  
+      </div>
+    </div>
+  </div>
+</div>
+</center>
+
+<center>
+  <div style="width: 85%">
+    <table class="table table-dark" >
+      <thead>
+        <tr>
+          <th scope="col">المرحلة</th> .
+          <th scope="col">القسم</th>
+          <th scope="col">العنوان</th>
+          <th scope="col">رقم الهاتف</th>
+          <th scope="col">الايميل</th>
+          <th scope="col">وقت المباشرة</th>
+          <th scope="col">اسم الاب و الجد</th>
+          <th scope="col">اسم الطالب</th>
+          <th scope="col">^</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in data %}
+        <tr>
+          <td>{{n.level}}</td>.
+          <td>{{n.department}}</td>
+          <td>{{n.Address}}</td>
+          <td>{{n.phonenumber}}</td>
+          <td>{{n.Email}}</td>
+          <td>{{n.Direct_Date}}</td>
+          <td>{{n.lestname}}</td>
+          <td><a href="http://127.0.0.1:5000/Add_Degree">{{n.firstname}}</a></td>
+          <th scope="row">></th>
+        </tr>
+         {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</center>
+
+
+  <script>
+        function Function1() {
+              window.open("http://127.0.0.1:5000/ADD_student/{{inf_dep[0]}}");
+        }
+        function Function2() {
+              window.open("http://127.0.0.1:5000/search_student/{{inf_dep[0]}}");
+        }
+        function Function3() {
+              window.open("http://127.0.0.1:5000/Show_Depa_inf/{{inf_dep[0]}}");
+        }
+         function Function6() {
+              window.open("http://127.0.0.1:5000/Add_Degree");
+        }
+  </script>
+  </body>
+
+</html>
+
+

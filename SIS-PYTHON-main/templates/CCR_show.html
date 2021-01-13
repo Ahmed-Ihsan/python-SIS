@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
+        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sia.css') }}">
+  
+    </head>
+    <body>
+      <center>><div style="width: 60%;">
+      {% for n in d %}
+      <div class="card mb-3">
+        <img src="{{room[n-1].pathimage}}" class="card-img-top" alt="No image">
+        <div class="card-body">
+          <h5 class="card-title"><a href="post1/{{room[n-1].userid}}"> {{room[n-1].room_name}}</h5></a>
+          <p class="card-text"><small class="text-muted">{{room[n-1].department}}</small></p>
+        </div>
+      </div>
+      {% endfor %}
+      </div></center>
+    </body>
+</html>
