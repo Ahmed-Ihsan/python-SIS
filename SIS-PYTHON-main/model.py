@@ -20,21 +20,6 @@ class savefile(db.Model):
 	path = db.Column(db.String(), nullable=False)
 	department = db.Column(db.String(), nullable=False)
 
-class student_file(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	path = db.Column(db.String(), nullable=False)
-	student_id= db.Column(db.Integer, nullable=False)
-	department = db.Column(db.String(), nullable=False)
-	type_file = db.Column(db.String(), nullable=False)
-
-class Bookname(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	book_number = db.Column(db.String(), nullable=False)
-	nmaefile = db.Column(db.String(), nullable=False)
-	type_si = db.Column(db.String(10), nullable=False)
-	Title = db.Column(db.String(23), nullable=False)
-	department = db.Column(db.String(), nullable=False)
-
 #/////////////////////////////////////////////////////////////////////////////////#
 
 class Subjects(db.Model):
@@ -45,12 +30,38 @@ class Subjects(db.Model):
 	department = db.Column(db.String(), nullable=False)
 	level = db.Column(db.String(), nullable=False)
 
+class Bookname(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	book_number = db.Column(db.String(), nullable=False)
+	path = db.Column(db.String(), nullable=False)
+	department = db.Column(db.String(), nullable=False)
+
+class student_file(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	path = db.Column(db.String(), nullable=False)
+	student_id= db.Column(db.Integer, nullable=False)
+	department = db.Column(db.String(), nullable=False)
+	type_file = db.Column(db.String(), nullable=False)
+
+class mail(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name= db.Column(db.String(), nullable=False)
+	path = db.Column(db.String(), nullable=False)
+	Direct_Date =db.Column(db.DateTime(), nullable=False)
+	To = db.Column(db.String(), nullable=False)
+	From = db.Column(db.String(), nullable=False)
+
 class teacher(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name= db.Column(db.String(), nullable=False)
-	thanks_Book=db.Column(db.String(), nullable=False)
-	punishment=db.Column(db.String(), nullable=False)
 
+class teacher_inf(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	teacher_id= db.Column(db.Integer, nullable=False)
+	Vacations=db.Column(db.String(), nullable=False)
+	book_thi= db.Column(db.String(), nullable=False)
+	Notice=db.Column(db.String(), nullable=False)
+	Punishment=db.Column(db.String(), nullable=False)
 
 class cost(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
