@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-        <style>
-
-</style>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  -->
         <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
        <style >
@@ -139,6 +126,4 @@
                 window.alert(room)
             </script>
 
-    </body>
-
-</html>
+{% endblock %}

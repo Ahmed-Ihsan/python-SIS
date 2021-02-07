@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-        <style>
-          option,datalist,input{
-            text-align: right;
-          }
-        </style>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  -->
         <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
        <style >
@@ -41,17 +26,6 @@
         
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title"><button type="button"  onclick="Function()" class="btn btn-success">معلومات التدريسين</button></h5>
-        
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title"><button type="button"  onclick="Function4()" class="btn btn-success">البحث عن كتاب</button></h5> 
-      </div>
-    </div>
   </div>
 </div>
 </center>
@@ -71,13 +45,6 @@
         
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title"><button type="button"  onclick="Function1()" class="btn btn-success">رفع كتاب شكر</button></h5>
-        
-      </div>
-    </div>
-
     <div class="card">
       <div class="card-body">
         <h5 class="card-title"><button type="button"  onclick="Function0()" class="btn btn-success">ارسال بريد</button></h5>
@@ -111,35 +78,24 @@
     </form>
   </div>
 </center>
-{% elif inf == 'book' %}
-<center>
-   <div style="width: 45%;">
-    <form action = "Administrative_unit/book" method = "POST" enctype = "multipart/form-data">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" name ="file" id="customFile">
-          <label class="custom-file-label" for="customFile">كتاب شكر</label>
-        </div>
-          <input type="text" class="form-control" required name="name" placeholder="اسم التدريسي" >
-        <button type="submit" class="btn btn-primary">رفع</button>
-    </form>
-  </div>
-</center>
+
 {% elif inf == 'techer_inf' %}
 <center>
    <div style="width: 45%;">
-    <form action = "Administrative_unit/." method = "POST" enctype = "multipart/form-data">
+    <form action = "" method = "POST" enctype = "multipart/form-data">
         <div class="custom-file">
           <input type="file" class="custom-file-input" name ="file" id="customFile">
           <label class="custom-file-label" for="customFile">رفع ملف</label>
         </div>
-          <input type="date" class="form-control" required name="type_file" >
-          <input type="text" class="form-control" required name="type_file" placeholder="اسم التدريسي" >
-          <input type="text" class="form-control" required name="type_file" placeholder="ملاحظات" >
-          <select style="width: 45%" id="cars" name="cars">
-            <option value="1">اجازة</option>
-            <option value="2">عقوبة</option>
-            <option value="3">كتاب شكر</option>
-          </select><br>
+          <input type="date" class="form-control" required name="time" >
+          <input type="text" class="form-control" required name="name" placeholder="اسم التدريسي" >
+          <input type="text" class="form-control" required name="note" placeholder="ملاحظات" >
+          <input type="text" class="form-control" list="id32" required name="Type" placeholder="نوع الملف" >
+           <datalist id="id32">
+              <option  value="اجازة" />
+              <option  value="عقوبات" />
+              <option  value="كتب شكر" />
+              </datalist>
         <button type="submit" class="btn btn-primary">رفع</button>
     </form>
   </div>
@@ -147,7 +103,7 @@
 {% elif inf == 'upl_book' %}
 <center>
    <div style="width: 45%;">
-    <form action = "Administrative_unit/." method = "POST" enctype = "multipart/form-data">
+    <form action = "/Administrative_unit/upl_book" method = "POST" enctype = "multipart/form-data">
         <div class="custom-file">
           <input type="file" class="custom-file-input" name ="file" id="customFile">
           <label class="custom-file-label" for="customFile">رفع ملف</label>
@@ -164,7 +120,7 @@
 {% elif inf == 'ser_book' %}
 <center>
    <div style="width: 45%;">
-    <form action = "Administrative_unit/." method = "POST" enctype = "multipart/form-data">
+    <form action = "/Administrative_unit/book" method = "POST" enctype = "multipart/form-data">
           <input type="text" class="form-control" required name="type_file" placeholder="رقم الكتاب او عنوان الكتاب" >
         <button type="submit" class="btn btn-primary">رفع</button>
     </form>
@@ -180,29 +136,21 @@
  <script>
   
         function Function0() {
-              window.location.href = "http://127.0.0.1:5000/Administrative_unit/send";
-              //window.location.replace("http://127.0.0.1:5000/Administrative_unit/send");
-             // window.open("http://127.0.0.1:5000/Administrative_unit/send");
-        }
-        function Function1() {
-             window.location.replace("http://127.0.0.1:5000/Administrative_unit/book");
+              window.location.href = "/Administrative_unit/send";
+              //window.location.replace("/Administrative_unit/send");
+             // window.open("/Administrative_unit/send");
         }
         function Function2() {
-              window.location.replace("http://127.0.0.1:5000/Administrative_unit/techer_inf");
+              window.location.replace("/Administrative_unit/techer_inf");
         }
          function Function3() {
-              window.location.replace("http://127.0.0.1:5000/Administrative_unit/upl_book");
-        }
-        function Function4() {
-              window.location.replace("http://127.0.0.1:5000/Administrative_unit/ser_book");
+              window.location.replace("/Administrative_unit/upl_book");
         }
         function Function6() {
-             window.location.replace("http://127.0.0.1:5000/send_file/الاقسام الادارية");
+             window.location.replace("/send_file/الاقسام الادارية");
         }
         function Function7() {
-             window.location.replace("http://127.0.0.1:5000/received_file/الاقسام الادارية");
+             window.location.replace("/received_file/الاقسام الادارية");
         }
   </script>
-  </body>
-
-</html>
+{% endblock %}

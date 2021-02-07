@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
     </head>
     <body>
          <h1>Admin page</h1>
@@ -53,3 +42,4 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     </body>
 </html>
+{% endblock %}

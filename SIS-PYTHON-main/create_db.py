@@ -17,7 +17,7 @@ def main():
 	us=User(username='ahmed1' , password=generate_password_hash(PassWord("admin")) , department='admin')
 	db.session.add(us)
 	db.session.commit()
-	us=User(username='ahmed2' , password=generate_password_hash(PassWord("admin")) , department='unitname')
+	us=User(username='ahmed2' , password=generate_password_hash(PassWord("admin")) , department='هندسة تقنيات الحاسوب')
 	db.session.add(us)
 	db.session.commit()
 	us=User(username='ahmed3' , password=generate_password_hash(PassWord("admin")) , department='Administrative_unit')

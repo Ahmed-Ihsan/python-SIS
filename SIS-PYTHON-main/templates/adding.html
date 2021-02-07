@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> Brand</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style/assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/assets/fonts/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+    <style type="text/css">
+        input{
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top text-dark bg-white text-center" id="mainNav">
+        <div class="container"><a class="navbar-brand text-dark js-scroll-trigger" href="https://hiuc.edu.iq/">كلية الحكمة الجامعة</a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler text-light bg-dark border-light navbar-toggler-right" type="button"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify bg-dark border-light"></i></button>
+            <div class="collapse navbar-collapse text-right" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link text-dark js-scroll-trigger" href="/ADD_student">اضافة معلومات الطلاب</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark js-scroll-trigger" href="#id1">ارسال بريد</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark js-scroll-trigger" href="#id2">البريد الوارد و الصادر</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="/logout">تسجيل الخروج</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead text-center text-white d-flex" style="background-image:url('{{url_for('static', filename='style/assets/img/header.jpg') }}');">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1 class="text-uppercase bg-dark border rounded-0 border-info"><strong class="border rounded d-block mt-auto">كلية الحكمة الجامعة&nbsp;</strong><strong class="mt-auto">قسم التسجيل&nbsp;</strong></h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <p class="text-center text-white bg-dark border rounded border-light text-faded mb-5"><br><strong>كلية أهلية معترف بها من وزارة التعليم العالي والبحث العلميبكتابها المرقم: ج/هـ 4078 والمؤرخ في 2010/9/5.</strong><br><br></p>
+            </div>
+        </div>
+    </header>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">نظام تحكم الاقسام الادارية</h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="mx-auto service-box mt-5"><i class="fa fa-address-card fa-4x text-primary mb-3 sr-icons" data-aos="zoom-in" data-aos-duration="200" data-aos-once="true"></i>
+                        <h3 class="mb-3">اضافة بيانات الطالب</h3>
+                        <p class="text-muted mb-0"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="mx-auto service-box mt-5"><i class="fa fa-paper-plane fa-4x text-primary mb-3 sr-icons" data-aos="zoom-in" data-aos-duration="200" data-aos-delay="200" data-aos-once="true"></i>
+                        <h3 class="mb-3">ارسال البريد</h3>
+                        <p class="text-muted mb-0"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="mx-auto service-box mt-5"><i class="fa fa-graduation-cap fa-4x text-primary mb-3 sr-icons" data-aos="zoom-in" data-aos-duration="200" data-aos-delay="400" data-aos-once="true"></i>
+                        <h3 class="mb-3">تعديل بيانات لطلاب</h3>
+                        <p class="text-muted mb-0"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="mx-auto service-box mt-5"><i class="fa fa-th-list fa-4x text-primary mb-3 sr-icons" data-aos="fade" data-aos-duration="200" data-aos-delay="600" data-aos-once="true"></i>
+                        <h3 class="mb-3">البريد الصادر و الوارد</h3>
+                        <p class="text-muted mb-0"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <div id="id1" style="background:#33C4FF;">
+    <br>
+    <center>
+       <b> <h1>ارسال بريد</h1> </b>
+   <div style="width: 45%; ">
+    <form action = "/SEND_uint" method = "POST" enctype = "multipart/form-data">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name ="file" id="customFile">
+          <label class="custom-file-label" for="customFile">ارسال بريد</label>
+        </div>
+        <br>
+          <input type="hidden" class="form-control" required name="From" value="قسم التسجيل" placeholder="من" >
+          <br>
+          <input type="text" class="form-control" required name="name" placeholder="اسم الكتاب" >
+          <br>
+          <input type="text" list="browsers" class="form-control" required name="To" placeholder="الى" >
+              <datalist id="browsers">
+              <option  value="هندسة تقنيات الحاسوب" />
+              <option  value="هندسة الاجهزة الطبية" />
+              <option  value="طب الاسنان" />
+              <option  value=" لغة العربية" />
+              <option  value="قانون" />
+              <option  value="تحليلات" />
+              </datalist>
+              <br>
+        <button type="submit" class="btn btn-primary" style="background: blue">ارسل </button>
+        <br>
+        <br>
+    </form>
+  </div>
+</center>
+
+<div id="id2" style="background: #fff">
+    <br>
+    <center>
+        ,<b> <h1>البريد</h1> </b>
+   <div style="width: 80%; ">
+        <button class="btn btn-primary" style="background: blue ; display: line;margin-right: 25%"><a href="/received_file/قسم التسجيل">البريد الوارد  </a></button>                  
+        <button class="btn btn-primary" style="background: blue "><a href="/send_file/قسم التسجيل">البريد الصادر  </a></button>
+        <br><br>
+
+    {% if inf != None %}
+
+    <center>
+          <div style="width: 85%">
+            <table class="table table-dark" >
+              <thead>
+                <tr>
+                  <th scope="col">تنزيل</th>
+                  <th scope="col">الجهة المستلمة</th>
+                  <th scope="col">الجهة المصدرة</th>
+                  <th scope="col">وقت الرفع</th>
+                  <th scope="col">اسم الكتاب</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for n in inf %}
+                <tr>
+                    <th scope="row"><a href="" download="{{n.path}}">تنزيل</a></th>
+                    <td>{{n.To}}</td>
+                    <td>{{n.From}}</td>
+                    <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}}</td>
+                    <td>{{n.name}}</td>
+                </tr>
+                 {% endfor %}
+                 
+              </tbody>
+            </table>
+          </div>
+        </center>
+         
+    {% endif %}
+  </div>  
+</center>
+</div>
+
+</div>
+    <section id="portfolio" class="p-0" ></section>
+    <section class="text-light bg-dark" id="contact" style="background:#33C4FF" >
+        <div class="container">
+            <div class="row" >
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-heading">اتصل بنا</h2>
+                    <hr class="my-4">
+                    <p class="mb-5">للاتصال او الاستفسار التواصل مع فريق كلية الحكمة للدعم الاكتروني&nbsp;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 ml-auto text-center"><i class="fa fa-phone fa-3x mb-3 sr-contact" data-aos="zoom-in" data-aos-duration="300" data-aos-once="true"></i>
+                    <p>0772 266 3666<br></p>
+                </div>
+                <div class="col-lg-4 mr-auto text-center"><i class="fa fa-envelope-o fa-3x mb-3 sr-contact" data-aos="zoom-in" data-aos-duration="300" data-aos-delay="300" data-aos-once="true"></i>
+                    <p>info@hiuc.edu.iq</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{{url_for('static', filename='style/assets/js/jquery.min.js') }}"></script>
+    <script src="{{url_for('static', filename='style/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{url_for('static', filename='style/assets/js/bs-init.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="{{url_for('static', filename='style/assets/js/creative.js') }}"></script>
+</body>
+
+</html>

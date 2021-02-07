@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-        <style>
-
-</style>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  -->
         <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
        <style >
@@ -147,40 +134,38 @@
 <script>
 
                 function Function1() {
-                  window.open("http://127.0.0.1:5000/depar/هندسة تقنيات الحاسوب");
+                  window.location.replace("/depar/هندسة تقنيات الحاسوب");
                 }
                 function Function2() {
-                  window.open("http://127.0.0.1:5000/depar/طب الاسنان");
+                  window.location.replace("/depar/طب الاسنان");
                 }
                 function Function3() {
-                  window.open("http://127.0.0.1:5000/depar/هندسة تقنيات الاجهزة الطبية ");
+                  window.location.replace("/depar/هندسة تقنيات الاجهزة الطبية ");
                 }
                 function Function4() {
-                  window.open("http://127.0.0.1:5000/depar/العربي");
+                  window.location.replace("/depar/العربي");
                 }
                 function Function5() {
-                  window.open("http://127.0.0.1:5000/depar/القانون");
+                  window.location.replace("/depar/القانون");
                 }
                 function Function6() {
-                  window.open("http://127.0.0.1:5000/depar/الاسلامية");
+                  window.location.replace("/depar/الاسلامية");
                 }
                 function Function7() {
-                  window.open("http://127.0.0.1:5000/depar/تحليلات");
+                  window.location.replace("/depar/تحليلات");
                 }
                 function Function8() {
-                  window.open("http://127.0.0.1:5000/ADD_Depa");
+                  window.location.replace("/ADD_Depa");
                 }
                 function Functionstop() {
-                  window.open("http://127.0.0.1:5000/ADD_teacher");
+                  window.location.replace("/ADD_teacher");
                 }
                  function Function9() {
-                  window.open("http://127.0.0.1:5000/show_teacher");
+                  window.location.replace("/show_teacher");
                 }
                 function Function10() {
-                  window.open("http://127.0.0.1:5000/ADD_student");
+                  window.location.replace("/ADD_student");
                 }
 </script>
 
-</body>
-
-</html>
+{% endblock %}

@@ -6,6 +6,8 @@ from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from model import *
 from datetime import datetime
+from flask_sslify import SSLify
+from OpenSSL import SSL
 
 def PassWord(string):
 	new_pass=""
@@ -15,22 +17,90 @@ def PassWord(string):
 
 UPLOAD_FOLDER = os.path.join('static', 'upload_file')
 app = Flask(__name__)
+context = ('web.crt', 'web.key')
+sslify = SSLify(app)
+
 app.secret_key='Ahmed_0x3510d08771d53c1e0x320x310x32_ihsan'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database/db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 
+
 @app.route("/", methods=['GET', 'POST'])
-def cover():
+def start():
+	return redirect(url_for('login'))
+
+# USES
+@app.route("/route", methods=['GET', 'POST'])
+def route():
+	if 'هندسة تقنيات الحاسوب' in session['department']:
+		try:
+			data=student.query.filter_by(department= session['department']).all()
+			return render_template('Show_Depa.html' , inf_dep=session['department'] , data=data)
+		except Exception as e:
+			return render_template('Show_Depa.html' , inf_dep=session['department'])
+	if "admin" in session['department']:
+		count_s=student.query.count()
+		count_t=teacher.query.count()
+		count_d=Department.query.count()
+		count_all=[count_s , count_t , 7]
+		return render_template('stated.html' , count=count_all)
 	return render_template('cover.html')
 
+# USES
+@app.route("/route_uint", methods=['GET', 'POST'])
+def route_uint():
+	if "Administrative_unit" in session['department']:
+		return redirect(url_for('Administrative_unit'))
+	return render_template('adding.html', inf = None )
+# USES
+@app.route("/SEND_uint", methods=['GET', 'POST'])
+def SEND_uint():
+	if "adding" in session['department']:
+		if request.method == 'POST':
+				f = request.files['file']
+				if f != None:
+					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+					From=request.form['From']
+					name=request.form['name']
+					To=request.form['To']
+					time=datetime.now()
+					us=mail(path=save_file, name=name , Direct_Date=time , To=To , From=From )
+					db.session.add(us)
+					db.session.commit()
+					return redirect(url_for('route_uint'))
+		return redirect(url_for('route_uint'))
+	if request.method == 'POST':
+				f = request.files['file']
+				if f != None:
+					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+					From=request.form['From']
+					name=request.form['name']
+					To=request.form['To']
+					time=datetime.now()
+					us=mail(path=save_file, name=name , Direct_Date=time , To=To , From=From )
+					db.session.add(us)
+					db.session.commit()
+					return redirect(url_for('route'))
+	return redirect(url_for('login'))
+
+
+@app.route("/cover", methods=['GET', 'POST'])
+def cover():
+	inf = session['department']
+	return render_template('cover.html' , inf=inf)
+
+# USES
 @app.route('/pdf/<number>')
 def send_pdf(number):
 	if 'username' in session:
-		return send_from_directory( 'static/upload_file/',number+'.pdf')
+		return send_from_directory(app.config['UPLOAD_FOLDER']+number+'.pdf')
 	return redirect(url_for('login'))
 
+# USES
 @app.route('/profile_amd')
 def profile_amd():
 	if 'username' in session:
@@ -41,26 +111,43 @@ def profile_amd():
 		return render_template('profile_amd.html', inf=data)
 	return redirect(url_for('login'))
 
-@app.route('/received_file/<unit>')
+# USES
+@app.route('/received_file/<unit>' ,  methods=['GET', 'POST'])
 def received_file(unit):
 	if 'username' in session:
+		if request.method == 'POST':
+			search=request.form['search']
+			data=mail.query.filter_by(To=unit , From=search ).all()
+			return render_template('profile_amd.html', inf=data)
+		if session['department'] in "adding":
+				data=mail.query.filter_by(To='قسم التسجيل').all()
+				return render_template('adding.html', inf=data)
 		data=mail.query.filter_by(To=unit).all()
 		return render_template('profile_amd.html', inf=data)
 	return redirect(url_for('login'))
 
-@app.route('/send_file/<unit>')
+@app.route('/send_file/<unit>' ,  methods=['GET', 'POST'])
 def send_file(unit):
 	if 'username' in session:
+			if request.method == 'POST':
+				search=request.form['search']
+				data=mail.query.filter_by(To=unit , From=search ).all()
+				return render_template('profile_amd.html', inf=data)
+			if session['department'] in "adding":
+				data=mail.query.filter_by(From='قسم التسجيل').all()
+				return render_template('adding.html', inf=data)
 			data=mail.query.filter_by(From=unit).all()
 			return render_template('profile_amd.html', inf=data)
 	return redirect(url_for('login'))
 
-
+# USES
 @app.route('/logout')
 def logout():
    session.pop('username', None)
+   session.pop('department', None)
    return redirect(url_for('login'))
 
+# USES
 @app.route("/Administrative_unit", methods=['GET', 'POST'])
 def Administrative_unit():
 	if 'username' in session:
@@ -68,6 +155,7 @@ def Administrative_unit():
 	else:
 		return redirect(url_for('login'))
 
+# USES
 @app.route("/Administrative_unit/<Import>", methods=['GET', 'POST'])
 def Administrative_unit2(Import):
 	if 'username' in session:
@@ -85,22 +173,32 @@ def Administrative_unit2(Import):
 					db.session.add(us)
 					db.session.commit()
 					return render_template('Administrative_unit.html',inf=Import)
-			if Import == 'book':
+			if Import == 'techer_inf':
 				f = request.files['file']
 				if f != None:
 					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
 					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
 					name=request.form['name']
 					data1=teacher.query.filter_by(name=name).all()
+					if not data1:
+						return render_template('Administrative_unit.html',inf=Import)
 					time=request.form['time']
+					note=request.form['note']
+					Type=request.form['Type']
 					time=datetime(int(time[0:4]),int(time[5:7]), int(time[8:10]))
-					us=mail(teacher_id=data1.id , Vacations="None" , book_thi=save_file , Notice='None' , Punishment='None')
+					if "اجازة" in Type :
+						us=teacher_inf(teacher_id=data1.id , Vacations=save_file , book_thi="None" , Notice=str(note) , Punishment='None')
+					elif "عقوبات" in Type :
+						us=teacher_inf(teacher_id=data1.id , Vacations='None' , book_thi="None" , Notice=str(note) , Punishment=save_file)
+					else :
+						us=teacher_inf(teacher_id=data1.id , Vacations='None' , book_thi=save_file , Notice=str(note) , Punishment='None')	
 					db.session.add(us)
 					db.session.commit()
 					return render_template('Administrative_unit.html',inf=Import)
 		return render_template('Administrative_unit.html',inf=Import)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/Add_Degree", methods=['GET', 'POST'])
 def Add_Degree():
 	if 'username' in session:
@@ -123,9 +221,11 @@ def Add_Degree():
 		return render_template('Add_Degree.html')
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/upl_inf_stu/<int:id1>", methods=['GET', 'POST'])
 def upl_inf_stu(id1):
 	if 'username' in session:
+		data2=student.query.all()
 		if request.method == 'POST':
 			    id2=id1
 			    name3=request.form['name1']
@@ -138,13 +238,12 @@ def upl_inf_stu(id1):
 			    level=request.form['level']
 			    exec(open('computer.file/upload_student.py').read())
 			    data1=student.query.filter_by(id=id1).all()
-			    data2=student.query.all()
 			    return render_template('search_student.html' , info_fil=data1,info_all=data2,deep=department)
-		data2=student.query.all()
 		data1=None
 		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/upl_inf_stu/delete/<department>/<int:id1>", methods=['GET', 'POST'])
 def upl_inf_stu_delete(id1 , department):
 	if 'username' in session:
@@ -159,12 +258,13 @@ def upl_inf_stu_delete(id1 , department):
 		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/upl_file/<department>/<int:id1>", methods=['GET', 'POST'])
 def upl_file(id1 , department ):
 	if 'username' in session:
 		if request.method == 'POST':
 			f = request.files['file']
-			type_file = request.files['type_file']
+			type_file = request.form['typefile']
 			if f != None:
 					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
 					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
@@ -241,6 +341,7 @@ def ADD_teacher():
 		return render_template('Add_teacher.html')
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/search_student/<dep12>", methods=['GET', 'POST'])
 def search_student(dep12):
 	if 'username' in session:
@@ -254,6 +355,7 @@ def search_student(dep12):
 		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=dep12)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/ADD_student/<Depa>", methods=['GET', 'POST'])
 def ADD_student_DEB(Depa):
 	if 'username' in session:
@@ -275,6 +377,7 @@ def ADD_student_DEB(Depa):
 		return render_template('Add_student.html',dep=Depa)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/ADD_student", methods=['GET', 'POST'])
 def ADD_student():
 	if 'username' in session:
@@ -296,16 +399,18 @@ def ADD_student():
 		return render_template('Add_student.html',dep=None)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/depar/<Depa>", methods=['GET', 'POST'])
 def started(Depa):
 	if 'username' in session:
 		try:
-			data=student.query.filter_by(department =Depa).all()
-			return render_template('Show_Depa.html' , inf_dep=[Depa] , data=data)
+			data=student.query.filter_by(department = Depa).all()
+			return render_template('Show_Depa.html' , inf_dep=Depa, data=data)
 		except Exception as e:
-			return render_template('Show_Depa.html' , inf_dep= [Depa])
+			return render_template('Show_Depa.html' , inf_dep= Depa)
 	return redirect(url_for('login'))
 
+# USES
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -315,19 +420,23 @@ def login():
 			info=[data.id,data.username,data.department]
 			password=request.form['password']
 			if check_password_hash(data.password ,PassWord(password)):
-				session['username'] = username
-				if data.department == "admin":
-					return redirect(url_for('admin'))
-				elif data.department == 'Administrative_unit':
-					return redirect(url_for('Administrative_unit'))
-				elif data.department == 'unitname':
-					count_s=student.query.count()
-					count_t=teacher.query.count()
-					count_d=Department.query.count()
-					count_all=[count_s , count_t , 7]
-					return render_template('stated.html', info=info , count=count_all)
-				elif data.department == 'adding':
-					return render_template('Add_student.html', dep=None )
+				session['username']= username
+				session['department']= data.department
+				if session['department'] in "adding" or "Administrative_unit" in session['department']:
+					return redirect(url_for('route_uint'))
+				return redirect(url_for('cover'))
+				#if data.department == "admin":
+					#return redirect(url_for('admin'))
+				#elif data.department == 'Administrative_unit':
+					#return redirect(url_for('Administrative_unit'))
+				#elif data.department == 'unitname':
+					#count_s=student.query.count()
+					#count_t=teacher.query.count()
+					#count_d=Department.query.count()
+					#count_all=[count_s , count_t , 7]
+					#return render_template('stated.html', info=info , count=count_all)
+				#elif data.department == 'adding':
+					#return render_template('Add_student.html', dep=None )
 			errer='errer in passsword or usear name'
 			return render_template('login_page.html' ,e=errer)
 		except Exception as e:
@@ -338,8 +447,6 @@ def login():
 @app.route("/admin", methods=['GET', 'POST'])
 def admin():
 	if 'username' in session:
-		if not department_user :
-			return redirect(url_for('login'))
 		if request.method == 'POST':
 			try:
 				username=request.form['username']
@@ -612,5 +719,10 @@ def post2(idroom):
 
 
 if __name__ == '__main__':
-	app.run(debug=True)
-	
+	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'), host="0.0.0.0")
+	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'))
+	app.run(debug=True , host="0.0.0.0")
+	#--------CMD----------
+	#set FLASK_APP=run
+	#set FLASK_ENV=development
+	#flask run

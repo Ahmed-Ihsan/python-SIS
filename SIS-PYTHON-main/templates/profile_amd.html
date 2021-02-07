@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-        
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  -->
         <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
        <style >
@@ -34,7 +23,7 @@
          <input list="brow" id="inputAddress0" required="required" type="search"  name="search" style="width:80%;height: 40px">
               <datalist id="brow">
                 {% for n in inf %}
-                <option value="{{n.name}}:من {{n.From}}:الى {{n.To}}"></option>{% endfor %}
+                <option value="{{n.From}}"></option>{% endfor %}
         </div>
         <button type="submit" class="btn btn-primary">ارسل</button>
       </form>
@@ -51,6 +40,7 @@
     	  <th scope="col">تنزيل</th>
     	  <th scope="col">الجهة المستلمة</th>
     	  <th scope="col">الجهة المصدرة</th>
+        <th scope="col">تاريخ الرفع</th>
     	  <th scope="col">وقت الرفع</th>
     	  <th scope="col">اسم الكتاب</th>
         </tr>
@@ -58,10 +48,11 @@
       <tbody>
         {% for n in inf %}
         <tr>
-	        <th scope="row"><a href="{{n.path}}" download>تنزيل</a></th>
+	        <th scope="row"><a href=""  download="{{n.path}}">تنزيل</a></th>
 	        <td>{{n.To}}</td>
 	        <td>{{n.From}}</td>
-	        <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}}</td>
+	        <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}} </td>
+          <td>{{n.Direct_Date.hour}}:{{n.Direct_Date.minute}}</td>
 	        <td>{{n.name}}</td>
         </tr>
          {% endfor %}
@@ -70,6 +61,4 @@
     </table>
   </div>
 </center>
-
- </body>
-</html>
+{% endblock %}

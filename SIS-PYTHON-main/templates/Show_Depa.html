@@ -1,33 +1,20 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-        <style>
-          th , tr {
-            text-align: right;
-          }
-        </style>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  
         <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" > -->
        <style >
         body{
          background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
        }
+       input{
+        text-align: right;
+       }
        </style>
   
     </head>
     <body id="e1" style="height: 100%; width: 100%">
       <br>
-<h1 style="left: 100% ;text-align: center;color:#fff">{{inf_dep[0]}}</h1>
+<h1 style="left: 100% ;text-align: center;color:#fff">{{inf_dep}}</h1>
 
 <br>
 
@@ -37,7 +24,7 @@
     <div class="card" >
       <div class="card-body">
         <h5 class="card-title"><button type="button"   onclick="Function()" class="btn btn-success"> انتقل</button></h5>
-        <p class="card-text">البريد الوارد و الصادر</p>
+        <p class="card-text">البريد الوارد</p>
       </div>
     </div>
     <div class="card">
@@ -57,12 +44,43 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title"><button type="button"  onclick="Function3()" class="btn btn-success"> انتقل</button></h5>
-        <p class="card-text">معلومات القسم</p>  
+        <p class="card-text">البريد الصادر</p>  
       </div>
     </div>
   </div>
 </div>
 </center>
+
+<center>
+       <b> <h1>ارسال بريد</h1> </b>
+   <div style="width: 45%; ">
+    <form action = "/SEND_uint" method = "POST" enctype = "multipart/form-data">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name ="file" id="customFile">
+          <label class="custom-file-label" for="customFile">ارسال بريد</label>
+        </div>
+        <br>
+          <input type="hidden" class="form-control" required name="From" value="{{inf_dep}}" placeholder="من" >
+          <br>
+          <input type="text" class="form-control" required name="name" placeholder="اسم الكتاب" >
+          <br>
+          <input type="text" list="browsers" class="form-control" required name="To" placeholder="الى" >
+              <datalist id="browsers">
+              <option  value="هندسة تقنيات الحاسوب" />
+              <option  value="هندسة الاجهزة الطبية" />
+              <option  value="طب الاسنان" />
+              <option  value=" لغة العربية" />
+              <option  value="قانون" />
+              <option  value="تحليلات" />
+              </datalist>
+              <br>
+        <button type="submit" class="btn btn-primary" style="background: blue">ارسل </button>
+        <br>
+        <br>
+    </form>
+  </div>
+</center>
+
 
 <center>
   <div style="width: 85%">
@@ -90,7 +108,7 @@
           <td>{{n.Email}}</td>
           <td>{{n.Direct_Date}}</td>
           <td>{{n.lestname}}</td>
-          <td><a href="http://127.0.0.1:5000/Add_Degree">{{n.firstname}}</a></td>
+          <td><a href="/Add_Degree">{{n.firstname}}</a></td>
           <th scope="row">></th>
         </tr>
          {% endfor %}
@@ -100,22 +118,24 @@
 </center>
 
 
+
   <script>
+        function Function() {
+              window.location.replace("/received_file/{{inf_dep}}");
+        }
         function Function1() {
-              window.open("http://127.0.0.1:5000/ADD_student/{{inf_dep[0]}}");
+              window.location.replace("/ADD_student/{{inf_dep}}");
         }
         function Function2() {
-              window.open("http://127.0.0.1:5000/search_student/{{inf_dep[0]}}");
+              window.location.replace("/search_student/{{inf_dep}}");
         }
         function Function3() {
-              window.open("http://127.0.0.1:5000/Show_Depa_inf/{{inf_dep[0]}}");
+              window.location.replace("/send_file/{{inf_dep}}");
         }
          function Function6() {
-              window.open("http://127.0.0.1:5000/Add_Degree");
+              window.location.replace("/Add_Degree");
         }
   </script>
-  </body>
-
-</html>
+{% endblock %}
 
 

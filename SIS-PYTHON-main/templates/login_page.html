@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,9 +8,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
         <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+        {% block body %}
         <!--Custom css for chat pages -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/login.css') }}">
+
+        
     </head>
     <body>
         <center></center><!--<img src="{{ url_for('static', filename='image/aaa.png') }}" style=" border-radius: 50%;top: 25%;left: auto;right: 30px;margin: -150px 0 0 -150px;" >-->
@@ -22,6 +24,6 @@
         <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
     </form><br>
          {{e}}
-
+         {% endblock %}
     </body>
 </html>

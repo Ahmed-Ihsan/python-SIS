@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title></title>
-
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
-
+{% extends "login_page.html" %}
+         {% block body %}
         <!-- Custom css for chat pages  -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/cover.css') }}">
-
+       
          <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -40,8 +29,9 @@
     <div class="inner">
       <h3 class="masthead-brand" >SIS</h3>
       <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link" href="http://127.0.0.1:5000/login">تسجيل الدخول</a>
+        <a class="nav-link" href="route">{{inf}}</a>
         <a class="nav-link" href="http://hiuc.edu.iq">كلية الحكمة الجامعة</a>
+        <a class="nav-link" href="logout">تسجيل الخروج</a>
       </nav>
     </div>
   </header>
@@ -60,5 +50,4 @@
     </div>
   </footer>
 </div>
-</body>
-</html>
+{% endblock %}
