@@ -6,8 +6,6 @@ from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from model import *
 from datetime import datetime
-from flask_sslify import SSLify
-from OpenSSL import SSL
 
 def PassWord(string):
 	new_pass=""
@@ -17,8 +15,6 @@ def PassWord(string):
 
 UPLOAD_FOLDER = os.path.join('static', 'upload_file')
 app = Flask(__name__)
-context = ('web.crt', 'web.key')
-sslify = SSLify(app)
 
 app.secret_key='Ahmed_0x3510d08771d53c1e0x320x310x32_ihsan'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database/db.sqlite'
@@ -67,7 +63,7 @@ def SEND_uint():
 					name=request.form['name']
 					To=request.form['To']
 					time=datetime.now()
-					us=mail(path=save_file, name=name , Direct_Date=time , To=To , From=From )
+					us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
 					db.session.add(us)
 					db.session.commit()
 					return redirect(url_for('route_uint'))
@@ -81,7 +77,7 @@ def SEND_uint():
 					name=request.form['name']
 					To=request.form['To']
 					time=datetime.now()
-					us=mail(path=save_file, name=name , Direct_Date=time , To=To , From=From )
+					us=mail(path=save_file,name_file=f.filename, name=name , Direct_Date=time , To=To , From=From )
 					db.session.add(us)
 					db.session.commit()
 					return redirect(url_for('route'))
@@ -118,12 +114,12 @@ def received_file(unit):
 		if request.method == 'POST':
 			search=request.form['search']
 			data=mail.query.filter_by(To=unit , From=search ).all()
-			return render_template('profile_amd.html', inf=data)
+			return render_template('profile_amd.html',send=False, inf=data)
 		if session['department'] in "adding":
 				data=mail.query.filter_by(To='قسم التسجيل').all()
 				return render_template('adding.html', inf=data)
 		data=mail.query.filter_by(To=unit).all()
-		return render_template('profile_amd.html', inf=data)
+		return render_template('profile_amd.html',send=False, inf=data)
 	return redirect(url_for('login'))
 
 @app.route('/send_file/<unit>' ,  methods=['GET', 'POST'])
@@ -131,13 +127,13 @@ def send_file(unit):
 	if 'username' in session:
 			if request.method == 'POST':
 				search=request.form['search']
-				data=mail.query.filter_by(To=unit , From=search ).all()
-				return render_template('profile_amd.html', inf=data)
+				data=mail.query.filter_by(To=search , From=unit ).all()
+				return render_template('profile_amd.html',send=True, inf=data)
 			if session['department'] in "adding":
 				data=mail.query.filter_by(From='قسم التسجيل').all()
 				return render_template('adding.html', inf=data)
 			data=mail.query.filter_by(From=unit).all()
-			return render_template('profile_amd.html', inf=data)
+			return render_template('profile_amd.html', send=True ,inf=data)
 	return redirect(url_for('login'))
 
 # USES

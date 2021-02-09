@@ -45,6 +45,7 @@ class student_file(db.Model):
 
 class mail(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	name_file=db.Column(db.String(), nullable=False)
 	name= db.Column(db.String(), nullable=False)
 	path = db.Column(db.String(), nullable=False)
 	Direct_Date =db.Column(db.DateTime(), nullable=False)

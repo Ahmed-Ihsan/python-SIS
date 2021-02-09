@@ -142,7 +142,7 @@
               <tbody>
                 {% for n in inf %}
                 <tr>
-                    <th scope="row"><a href="" download="{{n.path}}">تنزيل</a></th>
+                    <th scope="row"><a href="../{{n.path}}" download="{{n.name_file}}">تنزيل</a></th>
                     <td>{{n.To}}</td>
                     <td>{{n.From}}</td>
                     <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}}</td>
