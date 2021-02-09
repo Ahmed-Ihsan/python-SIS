@@ -6,6 +6,8 @@ from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from model import *
 from datetime import datetime
+from flask_sslify import SSLify
+from OpenSSL import SSL
 
 def PassWord(string):
 	new_pass=""
