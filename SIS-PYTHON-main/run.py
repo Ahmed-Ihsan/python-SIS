@@ -17,6 +17,8 @@ def PassWord(string):
 
 UPLOAD_FOLDER = os.path.join('static', 'upload_file')
 app = Flask(__name__)
+context = ('web.crt', 'web.key')
+sslify = SSLify(app)
 
 app.secret_key='Ahmed_0x3510d08771d53c1e0x320x310x32_ihsan'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database/db.sqlite'
