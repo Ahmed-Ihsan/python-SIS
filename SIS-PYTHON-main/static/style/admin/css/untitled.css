@@ -1,0 +1,11 @@
+#ds {
+  margin: auto;
+}
+
+#dataTable_filter {
+  display: inline-block;
+}
+
+th,td,input{
+	text-align: right;
+}
