@@ -27,8 +27,64 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 
 
-@app.route("/", methods=['GET', 'POST'])
-def start():
+@app.route("/route_page", methods=['GET', 'POST'])
+@app.route("/route_page/<Type_path>", methods=['GET', 'POST'])
+def route_page(Type_path=None):
+	if 'username' in session: 
+		if "admin" in session['department']:
+			if request.method == 'POST':
+				print(Type_path)
+				if Type_path == "send":
+					f = request.files['file']
+					if f != None:
+						f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+						save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+						From=request.form['From']
+						name=request.form['name']
+						To=request.form['To']
+						time=datetime.now()
+						us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
+						db.session.add(us)
+						db.session.commit()
+						return render_template('admin_Send_mail.html')
+				elif Type_path in "add":
+					name1=request.form['name1']
+					name2=request.form['name2']
+					Direct_Date = request.form['date_time']
+					email=request.form['email']
+					ph_num=request.form['ph_num']
+					address=request.form['address']
+					department=request.form['department']
+					level=request.form['level']
+					print(int(Direct_Date[1:4]))
+					Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
+					data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
+					db.session.add(data)
+					db.session.commit()
+					return render_template('admin_Add_studenat.html')
+				search=request.form['search']
+				Type=request.form['Type']
+				section=request.form['section']
+				if search == "":
+					if Type in "2":
+						data=mail.query.filter_by(From=section).all()
+						return render_template('admin_sections.html',s=False, inf=data )
+					elif Type in "1":
+						data=mail.query.filter_by(To=section).all()
+						return render_template('admin_sections.html',s=False, inf=data )
+					else:
+						data=student.query.filter_by(department=section).all()
+						return render_template('admin_sections.html',s=True, inf=data )
+			elif Type_path == None:
+				data=mail.query.all()
+				return render_template('admin_sections.html' , inf=data ,s=False)
+			elif Type_path in "mail":
+				data=mail.query.filter_by(To=Type_path).all()
+				return render_template('admin_Mail.html', inf=data )
+			elif Type_path in "send":
+				return render_template('admin_Send_mail.html')
+			else:
+				return render_template('admin_Add_studenat.html')
 	return redirect(url_for('login'))
 
 # USES
@@ -40,12 +96,6 @@ def route():
 			return render_template('Show_Depa.html' , inf_dep=session['department'] , data=data)
 		except Exception as e:
 			return render_template('Show_Depa.html' , inf_dep=session['department'])
-	if "admin" in session['department']:
-		count_s=student.query.count()
-		count_t=teacher.query.count()
-		count_d=Department.query.count()
-		count_all=[count_s , count_t , 7]
-		return render_template('stated.html' , count=count_all)
 	return render_template('cover.html')
 
 # USES
@@ -291,12 +341,7 @@ def Show_Depa_inf(depa):
 		return render_template('show_teacher.html',info_fil=data1 , deep=depa)
 	return redirect(url_for('login'))
 
-@app.route("/show_teacher", methods=['GET', 'POST'])
-def show_teacher_all():
-	if 'username' in session:
-		data1=teacher.query.all()
-		return render_template('show_teacher.html',info_fil=data1)
-	return redirect(url_for('login'))
+
 
 @app.route("/ADD_Depa", methods=['GET', 'POST'])
 def ADD_Depa():
@@ -311,34 +356,6 @@ def ADD_Depa():
 			db.session.commit()
 			return render_template('Add_Depa.html')
 		return render_template('Add_Depa.html')
-	return redirect(url_for('login'))
-
-@app.route("/ADD_Subjects", methods=['GET', 'POST'])
-def ADD_Subjects():
-	if 'username' in session:
-		if request.method == 'POST':
-			names=request.form['nameSubjects']
-			day=request.form['Day']
-			teacher=request.form['teacher']
-			department=request.form['department']
-			level=request.form['level']
-			data=Subjects(nameSubjects=names , Day=day , teacher=cost ,department=department , level=level)
-			db.session.add(data)
-			db.session.commit()
-			return render_template('ADD_Subjects.html')
-		return render_template('ADD_Subjects.html')
-	return redirect(url_for('login'))
-
-@app.route("/ADD_teacher", methods=['GET', 'POST'])
-def ADD_teacher():
-	if 'username' in session:
-		if request.method == 'POST':
-			names=request.form['names']
-			data=teacher(name=names)
-			db.session.add(data)
-			db.session.commit()
-			return render_template('Add_teacher.html')
-		return render_template('Add_teacher.html')
 	return redirect(url_for('login'))
 
 # USES
@@ -411,6 +428,7 @@ def started(Depa):
 	return redirect(url_for('login'))
 
 # USES
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -424,7 +442,10 @@ def login():
 				session['department']= data.department
 				if session['department'] in "adding" or "Administrative_unit" in session['department']:
 					return redirect(url_for('route_uint'))
-				return redirect(url_for('cover'))
+				elif session['department'] in "admin":
+					return redirect(url_for("route_page"))
+				else:
+					return redirect(url_for('cover'))
 				#if data.department == "admin":
 					#return redirect(url_for('admin'))
 				#elif data.department == 'Administrative_unit':
@@ -495,228 +516,6 @@ def upload():
 			return render_template('admin_page.html' , e=e)
 	return render_template('admin_page.html' , e='nathing')
 '''
-@app.route("/unit", methods=['GET', 'POST'])
-def unit():
-	if 'username' in session:
-		if request.method == 'POST':
-			try:
-				print(1)
-				try:
-					f = request.files['file']
-				except Exception as e:
-					print(1)
-				bookname=request.form['bookname']
-				Title=request.form['Title']
-				type_si=request.form['type_si']
-				typ=request.form['type']
-				department=request.form['department']
-				if 'insert' in typ:
-					try:
-						if f != None:
-							f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-							#save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
-							us1=Bookname(book_number=bookname , nmaefile=f.filename ,type_si=type_si, Title=Title , department = department)
-							db.session.add(us1)
-							db.session.commit()
-							return render_template('unit.html' , e='successfully',all_data='http:\\\\127.0.0.1:5000\\pdf\\start' ,department = department )
-						return render_template('unit.html' , e='None' ,all_data='http:\\\\127.0.0.1:5000\\pdf\\start',department = department)
-					except Exception as e:
-					  print(e)
-					  return render_template('unit.html' ,all_data='http:\\\\127.0.0.1:5000\\pdf\\start' , e=e )
-				elif 'upload' in typ :
-					global data_up , data_up2
-					data_up = bookname
-					data_up2 = data
-					exec(open('computer.file/upload.py').read())
-					return render_template('unit.html' , ret="successfully" , all_data='http:\\\\127.0.0.1:5000\\pdf\\start',department = department)
-				elif 'delete' in typ:
-					global data_dl
-					data_dl = bookname
-					exec(open('computer.file/delete.py').read())
-					return render_template('unit.html' , ret="successfully" ,all_data='http:\\\\127.0.0.1:5000\\pdf\\start', department = department)
-				elif 'search' in typ:
-					c=None
-					data=Bookname.query.filter_by(book_number = bookname ).first()
-					c=data.nmaefile
-					c = c.replace(".pdf","")
-					return render_template('unit.html' , all_data='http:\\\\127.0.0.1:5000\\pdf\\'+c ,e='successfully 22', department = department)
-			except Exception as e:
-				return render_template('unit.html' , all_data='http:\\\\127.0.0.1:5000\\pdf\\start', e=e , department = department )
-			except Exception as e:
-				return render_template('unit.html',e=e ,all_data='http:\\\\127.0.0.1:5000\\pdf\\start' , department = department)
-		return render_template('unit.html' ,all_data='http:\\\\127.0.0.1:5000\\pdf\\start')
-	return redirect(url_for('login'))
-
-
-@app.route("/SIA", methods=['GET', 'POST'])
-def SIA():
-	if 'username' in session:
-		if request.method == 'POST':
-			try:
-				firstname=request.form['firstname']
-				lestname=request.form['lestname']
-				Email=request.form['Email']
-				phonenumber=request.form['phonenumber']
-				Address=request.form['Address']
-				City=request.form['City']
-				department=request.form['department']
-				level=request.form['level']
-				true=request.form['true']
-				us=student(firstname=firstname , lestname= lestname , Email=Email , phonenumber=phonenumber , Address=Address , City=City , department=department , level=level)
-				db.session.add(us)
-				db.session.commit()
-			except Exception as e:
-				pass
-		return render_template('ASI.html')
-	return redirect(url_for('login'))
-
-@app.route("/SDId", methods=['GET', 'POST'])
-def SDId():
-	if 'username' in session:
-		if request.method == 'POST':
-				student_id=request.form['search']
-				print(student_id)
-				data = student.query.get(student_id)
-				student_name=data.firstname+" "+data.lestname
-				class_1=request.form['class1']
-				class_2=request.form['class2']
-				class_3=request.form['class3']
-				class_4=request.form['class4']
-				class_5=request.form['class5']
-				class_6=request.form['class6']
-				class_7=request.form['class7']
-				class_8=request.form['class8']
-				department=request.form['department']
-				us=d(student_id=student_id ,student_name=student_name ,class_1=class_1 , class_2= class_2 , class_3=class_3 , class_4=class_4 , class_5=class_5 , class_6=class_6 , class_7=class_7 , class_8=class_8 , department=department)
-				db.session.add(us)
-				db.session.commit()
-				data = student.query.all()
-				return render_template('SDI.html',student=data)
-		data = student.query.all()
-		return render_template('SDI.html',student=data)
-	return redirect(url_for('login'))
-
-
-@app.route("/SIS", methods=['GET', 'POST'])
-def SIS():
-	if 'username' in session:
-		if request.method == 'POST':
-			Search=request.form['search']
-			data=student.query.filter_by(firstname = Search ).all()
-			return render_template('SIS.html',info=data)
-		data = student.query.all()
-		return render_template('SIS.html',info=data)
-	return redirect(url_for('login'))
-
-
-
-@app.route("/SDI", methods=['GET', 'POST'])
-def SDI():
-	if 'username' in session:
-		if request.method == 'POST':
-				student_id=request.form['search']
-				data=d.query.get(student_id)
-				return render_template('SDIshow.html',student=data)
-		data=d.query.all()
-		return render_template('SDIshow.html',student=data)
-	return redirect(url_for('login'))
-
-
-'''@app.route("/SDI2", methods=['GET', 'POST'])
-def SDI_():
-	if 'username' in session:
-	if request.method == 'POST':
-			student_id=request.form['search']
-			data=d.query.get(student_id)
-			return render_template('SDI.html',student=data)
-	data = student.query.all()
-	return render_template('SDI.html',student=data)
-'''
-
-@app.route("/SDI/<int:id_>", methods=['GET', 'POST'])
-def SDI_id(id_):
-	if 'username' in session:
-		data=d.query.filter_by(id=id_).all()
-		return render_template('SDIshow.html',student=data)
-	return redirect(url_for('login'))
-
-@app.route("/CCR", methods=['GET', 'POST'])
-def CCR():
-	if 'username' in session:
-		if request.method == 'POST':
-			roomname=request.form['Roomname']
-			roomcode=request.form['roomcode']
-			id_=request.form['id']
-			try:
-				f = request.files['file']
-				department = request.form['department']
-				if f != None:
-					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
-					us=CCR_(pathimage=save_file ,room_name=roomname,roomCode=roomcode ,department=department, userid=id_)
-					db.session.add(us)
-					db.session.commit()
-				return render_template('CCR.html',e="successfully")
-			except Exception as e:
-				return render_template('CCR.html',e=e)
-		return render_template('CCR.html',e="welcome")
-	return redirect(url_for('login'))
-
-@app.route("/CCR_show", methods=['GET', 'POST'])
-def CCR_show():
-	if 'username' in session:
-		data=CCR_.query.all()
-		data2=CCR_.query.count()
-		d=[]
-		for i in range(data2):
-			data2=data2-1
-			d.append(data[data2].id)
-		return render_template('CCR_show.html' , room=data , d=d)
-	return redirect(url_for('login'))
-
-@app.route("/post", methods=['GET', 'POST'])
-def post():
-	if 'username' in session:
-		if request.method == 'POST':
-			Title=request.form['Title']
-			text=request.form['text']
-			id_=request.form['id']
-			
-			try:
-				f = request.files['file']
-				
-				department = request.form['department']
-				
-				if f != None:
-					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
-					
-					us=postes(idus=id_,Title=Title,text=text ,filebath=save_file, command=" ", department= department)
-					db.session.add(us)
-					
-					db.session.commit()
-				return render_template('class.html')
-			except Exception as e:
-				print(e)
-				return render_template('class.html')
-		return render_template('class.html')
-	return redirect(url_for('login'))
-
-@app.route("/post1/<int:id_>", methods=['GET', 'POST'])
-def post1(id_):
-	if 'username' in session:
-		data=postes.query.filter_by(idus=id_).all()
-		return render_template('class_show.html' , post=data)
-	return redirect(url_for('login'))
-
-@app.route("/post2/<int:idroom>", methods=['GET', 'POST'])
-def post2(idroom):
-	if 'username' in session:
-		data=postes.query.filter_by(id=idroom).all()
-		return render_template('class_show.html' , post2=data)
-	return redirect(url_for('login'))
-
-
 
 if __name__ == '__main__':
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'), host="0.0.0.0")

@@ -21,13 +21,22 @@
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="name1" type="text" placeholder="اسم الطالب"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="name2" type="text" placeholder="اسم الاب و الجد"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="email" type="email" placeholder="البريد الالكتروني للطالب"><br>
-    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="ph_num" type="number" placeholder="رقم الهاتف"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="ph_num" type="tel" placeholder="رقم الهاتف"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="date_time" type="date" placeholder="تاريخ المباشرة"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="address" type="text" placeholder="العنوان"><br>
     {% if None != dep %}
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="department" type="text" value="{{dep}}" placeholder="القسم"><br>
     {% else %}
-    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="department" type="text"  placeholder="القسم"><br>
+    <div><select class="form-select" name="department" aria-label="Default select example">
+                          <option selected>اختر القسم</option>
+                          <option value="1">هندسة تقنيات الحاسوب</option>
+                          <option value="2">طب الاسنان</option>
+                          <option value="3">قسم القانون</option>
+                          <option value="4">اللغة العربية</option>
+                          <option value="5">هندسة الاجهزة الطبية</option>
+                          <option value="6">التحليلات المرضية</option>
+                          <option value="6">قسم الاسلامية</option>
+     </select></div>
     {% endif %}
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="level" type="text" placeholder="المرحلة"><
   </div>

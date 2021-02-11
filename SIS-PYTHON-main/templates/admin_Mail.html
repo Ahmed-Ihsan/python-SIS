@@ -1,0 +1,29 @@
+{% extends "admin_sections.html" %}
+         {% block body %}
+            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                         <tr>
+                                              <th scope="col">تنزيل</th>
+                                              <th scope="col">الجهة المستلمة</th>
+                                              <th scope="col">الجهة المصدرة</th>
+                                              <th scope="col">تاريخ الرفع</th>
+                                              <th scope="col">وقت الرفع</th>
+                                              <th scope="col">اسم الكتاب</th>
+                                         </tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                      {% for n in inf %}
+                                    <tr>
+                                        <th scope="row"><a href="../{{n.path}}" download="{{n.name_file}}">تنزيل</a></th>
+                                        <td>{{n.To}}</td>
+                                        <td>{{n.From}}</td>
+                                        <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}} </td>
+                                        <td>{{n.Direct_Date.hour}}:{{n.Direct_Date.minute}}</td>
+                                        <td>{{n.name}}</td>
+                                    </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+       {% endblock %}
