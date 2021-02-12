@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" >
-        <script type="text/javascript" src="{{url_for('static', filename='bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <style type="text/css">
+            input{
+                text-align: right;
+            }
+        </style>
         {% block body %}
         <!--Custom css for chat pages -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/login.css') }}">
@@ -17,11 +24,11 @@
     <body>
         <center></center><!--<img src="{{ url_for('static', filename='image/aaa.png') }}" style=" border-radius: 50%;top: 25%;left: auto;right: 30px;margin: -150px 0 0 -150px;" >-->
         <div class="login">
-    <h1>Login</h1>
+    <h1>تسجيل الدخول</h1>
     <form action = "/login" method = "POST" enctype = "multipart/form-data">
-        <input type="text" name="username" placeholder="username" required="required" />
-        <input type="password" name="password" placeholder="password" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
+        <input type="text" name="username" placeholder="اسم المستخدم" required="required" />
+        <input type="password" name="password" placeholder="اكلمة المرور" required="required" /><center>
+        <button type="submit" class="btn btn-primary btn-block btn-large" style="margin: auto;">تسجيل الدخول</button></center>
     </form><br>
          {{e}}
          {% endblock %}

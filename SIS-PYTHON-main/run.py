@@ -26,6 +26,51 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 
+@app.route("/route_section", methods=['GET', 'POST'])
+@app.route("/route_section/<Type_path>", methods=['GET', 'POST'])
+def route_section(Type_path=None):
+	if  not('username' in session):
+		return redirect(url_for('login'))
+	elif request.method == 'POST':
+		print(1)
+		if Type_path in "add":
+			name1=request.form['name1']
+			name2=request.form['name2']
+			Direct_Date = request.form['date_time']
+			email=request.form['email']
+			ph_num=request.form['ph_num']
+			address=request.form['address']
+			department=request.form['department']
+			level=request.form['level']
+			print(int(Direct_Date[1:4]))
+			Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
+			data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
+			db.session.add(data)
+			db.session.commit()
+			return render_template('section_add.html')
+		elif Type_path in "received_file":
+			search=request.form['search']
+			data=mail.query.filter_by(To=session['department'] , From=search).all()
+			return render_template('sectionMailR.html',send=False, inf=data)
+		elif Type_path in "send_file":
+			search=request.form['search']
+			data=mail.query.filter_by(From=session['department'] , To=search).all()
+			return render_template('sectionMailS.html',send=True, inf=data)
+	elif Type_path != None:
+		if Type_path in "add":
+			return render_template('section_add.html', db=session['department'] )
+		elif Type_path in "search":
+			    data2=student.query.all()
+			    return render_template('section_editer.html',info_fil=None,info_all=data2 , deep=session['department'])
+		elif Type_path in "received_file":
+			data=mail.query.filter_by(To=session['department']).all()
+			return render_template('sectionMailR.html',send=False, inf=data)
+		elif Type_path in "send_file":
+			data=mail.query.filter_by(From=session['department']).all()
+			return render_template('sectionMailS.html',send=True, inf=data)
+	else:
+		data=student.query.filter_by(department=session['department']).all()
+		return render_template('section_home.html' , data=data , db=session['department'] )
 
 @app.route("/route_page", methods=['GET', 'POST'])
 @app.route("/route_page/<Type_path>", methods=['GET', 'POST'])
@@ -288,9 +333,9 @@ def upl_inf_stu(id1):
 			    level=request.form['level']
 			    exec(open('computer.file/upload_student.py').read())
 			    data1=student.query.filter_by(id=id1).all()
-			    return render_template('search_student.html' , info_fil=data1,info_all=data2,deep=department)
+			    return render_template('section_editer.html' , info_fil=data1,info_all=data2,deep=department)
 		data1=None
-		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+		return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 	return redirect(url_for('login'))
 
 # USES
@@ -302,10 +347,10 @@ def upl_inf_stu_delete(id1 , department):
 			exec(open('computer.file/delete_student.py').read())
 			data2=student.query.all()
 			data1=None
-			return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+			return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 		data2=student.query.all()
 		data1=None
-		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+		return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 	return redirect(url_for('login'))
 
 # USES
@@ -323,25 +368,16 @@ def upl_file(id1 , department ):
 					db.session.commit()
 					data2=student.query.all()
 					data1=None
-					return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+					return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 			else:
 				data2=student.query.all()
 				data1=None
-				return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+				return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 		else:
 			data2=student.query.all()
 			data1=None
-			return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=department)
+			return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=department)
 	return redirect(url_for('login'))
-
-@app.route("/Show_Depa_inf/<depa>", methods=['GET', 'POST'])
-def Show_Depa_inf(depa):
-	if 'username' in session:
-		data1=Department.query.all()
-		return render_template('show_teacher.html',info_fil=data1 , deep=depa)
-	return redirect(url_for('login'))
-
-
 
 @app.route("/ADD_Depa", methods=['GET', 'POST'])
 def ADD_Depa():
@@ -366,66 +402,12 @@ def search_student(dep12):
 			data=request.form['search']
 			data1=student.query.filter_by(id=data).all()
 			data2=student.query.all()
-			return render_template('search_student.html' , info_fil=data1,info_all=data2,deep=dep12)
+			return render_template('section_editer.html' , info_fil=data1,info_all=data2,deep=dep12)
 		data2=student.query.all()
 		data1=None
-		return render_template('search_student.html',info_fil=data1,info_all=data2 , deep=dep12)
+		return render_template('section_editer.html',info_fil=data1,info_all=data2 , deep=dep12)
 	return redirect(url_for('login'))
 
-# USES
-@app.route("/ADD_student/<Depa>", methods=['GET', 'POST'])
-def ADD_student_DEB(Depa):
-	if 'username' in session:
-		if request.method == 'POST':
-			name1=request.form['name1']
-			name2=request.form['name2']
-			Direct_Date = request.form['date_time']
-			email=request.form['email']
-			ph_num=request.form['ph_num']
-			address=request.form['address']
-			department=request.form['department']
-			level=request.form['level']
-			print(int(Direct_Date[1:4]))
-			Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
-			data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
-			db.session.add(data)
-			db.session.commit()
-			return render_template('Add_student.html',dep=Depa)
-		return render_template('Add_student.html',dep=Depa)
-	return redirect(url_for('login'))
-
-# USES
-@app.route("/ADD_student", methods=['GET', 'POST'])
-def ADD_student():
-	if 'username' in session:
-		if request.method == 'POST':
-			name1=request.form['name1']
-			name2=request.form['name2']
-			Direct_Date = request.form['date_time']
-			email=request.form['email']
-			ph_num=request.form['ph_num']
-			address=request.form['address']
-			department=request.form['department']
-			level=request.form['level']
-			Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
-			print(Direct_Date)
-			data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
-			db.session.add(data)
-			db.session.commit()
-			return render_template('Add_student.html',dep=None)
-		return render_template('Add_student.html',dep=None)
-	return redirect(url_for('login'))
-
-# USES
-@app.route("/depar/<Depa>", methods=['GET', 'POST'])
-def started(Depa):
-	if 'username' in session:
-		try:
-			data=student.query.filter_by(department = Depa).all()
-			return render_template('Show_Depa.html' , inf_dep=Depa, data=data)
-		except Exception as e:
-			return render_template('Show_Depa.html' , inf_dep= Depa)
-	return redirect(url_for('login'))
 
 # USES
 @app.route("/", methods=['GET', 'POST'])
@@ -445,7 +427,7 @@ def login():
 				elif session['department'] in "admin":
 					return redirect(url_for("route_page"))
 				else:
-					return redirect(url_for('cover'))
+					return redirect(url_for("route_section"))
 				#if data.department == "admin":
 					#return redirect(url_for('admin'))
 				#elif data.department == 'Administrative_unit':
