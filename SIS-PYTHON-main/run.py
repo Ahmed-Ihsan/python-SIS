@@ -111,18 +111,22 @@ def route_page(Type_path=None):
 				Type=request.form['Type']
 				section=request.form['section']
 				if search == "":
+					print(1)
 					if Type in "2":
 						data=mail.query.filter_by(From=section).all()
-						return render_template('admin_sections.html',s=False, inf=data )
+						return render_template('admin_sections.html',s=False ,inf=data )
 					elif Type in "1":
 						data=mail.query.filter_by(To=section).all()
-						return render_template('admin_sections.html',s=False, inf=data )
+						return render_template('admin_sections.html', s=False,inf=data )
 					else:
 						data=student.query.filter_by(department=section).all()
-						return render_template('admin_sections.html',s=True, inf=data )
+						return render_template('admin_sections.html',s=True, inf=data)
+				else:
+					data=student.query.filter_by(department=section , firstname=search).all()
+					return render_template('admin_sections.html' ,s=True, inf=data)
 			elif Type_path == None:
 				data=mail.query.all()
-				return render_template('admin_sections.html' , inf=data ,s=False)
+				return render_template('admin_sections.html' ,s=False, inf=data )
 			elif Type_path in "mail":
 				data=mail.query.filter_by(To=Type_path).all()
 				return render_template('admin_Mail.html', inf=data )
