@@ -8,7 +8,7 @@ def PassWord(string):
 	for i in string:
 		new_pass=new_pass+str(hex(ord(i)))
 	return str(new_pass)
-
+	
 def main():
 	db.create_all()
 	us=User(username='ahmed0' , password=generate_password_hash(PassWord("admin")) , department='adding')

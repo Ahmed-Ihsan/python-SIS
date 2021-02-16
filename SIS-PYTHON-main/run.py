@@ -101,11 +101,14 @@ def route_page(Type_path=None):
 					address=request.form['address']
 					department=request.form['department']
 					level=request.form['level']
+					print(level)
 					print(int(Direct_Date[1:4]))
 					Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
 					data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
 					db.session.add(data)
+					print(1)
 					db.session.commit()
+					print(2)
 					return render_template('admin_Add_studenat.html')
 				search=request.form['search']
 				Type=request.form['Type']
@@ -117,12 +120,12 @@ def route_page(Type_path=None):
 						return render_template('admin_sections.html',s=False ,inf=data )
 					elif Type in "1":
 						data=mail.query.filter_by(To=section).all()
-						return render_template('admin_sections.html', s=False,inf=data )
+						return render_template('admin_sections.html', s=False, inf=data )
 					else:
 						data=student.query.filter_by(department=section).all()
 						return render_template('admin_sections.html',s=True, inf=data)
 				else:
-					data=student.query.filter_by(department=section , firstname=search).all()
+					data=student.query.filter_by(department=section , firstname=search ).all()
 					return render_template('admin_sections.html' ,s=True, inf=data)
 			elif Type_path == None:
 				data=mail.query.all()
@@ -502,6 +505,10 @@ def upload():
 			return render_template('admin_page.html' , e=e)
 	return render_template('admin_page.html' , e='nathing')
 '''
+@app.errorhandler(404)
+def page_not_found(e):
+	print(e)
+	return render_template('404.html'), 404
 
 if __name__ == '__main__':
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'), host="0.0.0.0")

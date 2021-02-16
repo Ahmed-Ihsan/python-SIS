@@ -1,8 +1,9 @@
 {% extends "admin_sections.html" %}
          {% block body %}
 
+
 <center>
-<div style="width:55%; margin-top: 1%">
+<div style="width:55%; margin-top: 1px;">
 
   <form action = "/route_page/add" method = "POST" enctype = "multipart/form-data">
   <div class="form-group">
@@ -12,15 +13,15 @@
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="ph_num" type="tel" placeholder="رقم الهاتف"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="date_time" type="date" placeholder="تاريخ المباشرة"><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="address" type="text" placeholder="العنوان"><br>
-    <div><select class="form-select" name="department" aria-label="Default select example">
+    <div><select class="form-select" name="department">
                           <option selected>اختر القسم</option>
-                          <option value="1">هندسة تقنيات الحاسوب</option>
-                          <option value="2">طب الاسنان</option>
-                          <option value="3">قسم القانون</option>
-                          <option value="4">اللغة العربية</option>
-                          <option value="5">هندسة الاجهزة الطبية</option>
-                          <option value="6">التحليلات المرضية</option>
-                          <option value="6">قسم الاسلامية</option>
+                          <option value="هندسة تقنيات الحاسوب">هندسة تقنيات الحاسوب</option>
+                          <option value="طب الاسنان">طب الاسنان</option>
+                          <option value="قسم القانون">قسم القانون</option>
+                          <option value="قسم القانون">اقسم القانون</option>
+                          <option value="هندسة الاجهزة الطبية">هندسة الاجهزة الطبية</option>
+                          <option value="التحليلات المرضية">التحليلات المرضية</option>
+                          <option value="قسم الاسلامية">قسم الاسلامية</option>
      </select></div><br>
     <input style="text-align: right;" required="required" class="form-control form-control-lg" name="level" type="text" placeholder="المرحلة">
   </div>
