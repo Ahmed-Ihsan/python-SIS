@@ -75,7 +75,8 @@ def route_section(Type_path=None):
 @app.route("/route_page", methods=['GET', 'POST'])
 @app.route("/route_page/<Type_path>", methods=['GET', 'POST'])
 def route_page(Type_path=None):
-		return render_template('admin_Add_studenat.html')
+		if  not ('username' in session) :
+			return redirect(url_for('login'))
 		if "admin" in session['department']:
 			if request.method == 'POST':
 				print(Type_path)
