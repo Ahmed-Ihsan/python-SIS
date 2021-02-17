@@ -136,7 +136,7 @@ def route_page(Type_path=None):
 				return render_template('admin_Send_mail.html')
 			else:
 				return render_template('admin_Add_studenat.html')
-	
+		return render_template('admin_Add_studenat.html')
 
 # USES
 @app.route("/route", methods=['GET', 'POST'])
