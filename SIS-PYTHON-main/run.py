@@ -75,6 +75,7 @@ def route_section(Type_path=None):
 @app.route("/route_page", methods=['GET', 'POST'])
 @app.route("/route_page/<Type_path>", methods=['GET', 'POST'])
 def route_page(Type_path=None):
+		return render_template('admin_Add_studenat.html')
 		if "admin" in session['department']:
 			if request.method == 'POST':
 				print(Type_path)
@@ -136,7 +137,6 @@ def route_page(Type_path=None):
 				return render_template('admin_Send_mail.html')
 			else:
 				return render_template('admin_Add_studenat.html')
-		return render_template('admin_Add_studenat.html')
 
 # USES
 @app.route("/route", methods=['GET', 'POST'])
