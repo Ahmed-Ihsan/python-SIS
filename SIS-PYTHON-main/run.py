@@ -3,11 +3,10 @@ import time
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect, url_for, flash ,send_from_directory ,session
 from werkzeug.security import check_password_hash
-from werkzeug.utils import secure_filename
 from model import *
 from datetime import datetime
+from flask_wtf.csrf import CSRFProtect
 from flask_sslify import SSLify
-from OpenSSL import SSL
 
 def PassWord(string):
 	new_pass=""
@@ -26,13 +25,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 
+
 @app.route("/route_section", methods=['GET', 'POST'])
 @app.route("/route_section/<Type_path>", methods=['GET', 'POST'])
 def route_section(Type_path=None):
-	if  not('username' in session):
+	if  not ('username' in session):
 		return redirect(url_for('login'))
 	elif request.method == 'POST':
-		print(1)
 		if Type_path in "add":
 			name1=request.form['name1']
 			name2=request.form['name2']
@@ -72,45 +71,44 @@ def route_section(Type_path=None):
 		data=student.query.filter_by(department=session['department']).all()
 		return render_template('section_home.html' , data=data , db=session['department'] )
 
+
 @app.route("/route_page", methods=['GET', 'POST'])
 @app.route("/route_page/<Type_path>", methods=['GET', 'POST'])
 def route_page(Type_path=None):
-		if  not ('username' in session) :
-			return redirect(url_for('login'))
-		if "admin" in session['department']:
-			if request.method == 'POST':
-				print(Type_path)
-				if Type_path == "send":
-					f = request.files['file']
-					if f != None:
-						f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-						save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
-						From=request.form['From']
-						name=request.form['name']
-						To=request.form['To']
-						time=datetime.now()
-						us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
-						db.session.add(us)
-						db.session.commit()
-						return render_template('admin_Send_mail.html')
-				elif Type_path == "add":
-					name1=request.form['name1']
-					name2=request.form['name2']
-					Direct_Date = request.form['date_time']
-					email=request.form['email']
-					ph_num=request.form['ph_num']
-					address=request.form['address']
-					department=request.form['department']
-					level=request.form['level']
-					print(level)
-					print(int(Direct_Date[1:4]))
-					Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
-					data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
-					db.session.add(data)
-					print(1)
+	if not ('username' in session): 
+		return redirect(url_for('login'))
+	elif "admin" in session['department']:
+		if request.method == 'POST':
+			print(Type_path)
+			if Type_path == "send":
+				f = request.files['file']
+				if f != None:
+					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+					From=request.form['From']
+					name=request.form['name']
+					To=request.form['To']
+					time=datetime.now()
+					us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
+					db.session.add(us)
 					db.session.commit()
-					print(2)
-					return render_template('admin_Add_studenat.html')
+					return render_template('admin_Send_mail.html')
+			elif Type_path == "add":
+				name1=request.form['name1']
+				name2=request.form['name2']
+				Direct_Date = request.form['date_time']
+				email=request.form['email']
+				ph_num=request.form['ph_num']
+				address=request.form['address']
+				department=request.form['department']
+				level=request.form['level']
+				print(int(Direct_Date[1:4]))
+				Direct_Date=datetime(int(Direct_Date[0:4]),int(Direct_Date[5:7]), int(Direct_Date[8:10]))
+				data=student(firstname=name1 , lestname=name2 , Direct_Date=Direct_Date , Email=email , phonenumber=ph_num , Address=address , department=department , level=level )
+				db.session.add(data)
+				db.session.commit()
+				return render_template('admin_Add_studenat.html')
+			else:
 				search=request.form['search']
 				Type=request.form['Type']
 				section=request.form['section']
@@ -128,34 +126,69 @@ def route_page(Type_path=None):
 				else:
 					data=student.query.filter_by(department=section , firstname=search ).all()
 					return render_template('admin_sections.html' ,s=True, inf=data)
-			elif Type_path == None:
-				data=mail.query.all()
-				return render_template('admin_sections.html' ,s=False, inf=data )
-			elif Type_path in "mail":
-				data=mail.query.filter_by(To=Type_path).all()
-				return render_template('admin_Mail.html', inf=data )
-			elif Type_path in "send":
-				return render_template('admin_Send_mail.html')
+		elif Type_path == None:
+			data=mail.query.all()
+			return render_template('admin_sections.html' ,s=False, inf=data )
+		elif Type_path in "mail":
+			data=mail.query.filter_by(To=Type_path).all()
+			return render_template('admin_Mail.html', inf=data )
+		elif Type_path in "send":
+			return render_template('admin_Send_mail.html')
+		else:
+			return render_template('admin_Add_studenat.html')
+	else:
+		return redirect(url_for('login'))
+
+
+@app.route("/route_Administrative", methods=['GET', 'POST'])
+@app.route("/route_Administrative/<Type_path>", methods=['GET', 'POST'])
+def route_Administrative(Type_path=None):
+	if not ('username' in session):
+		return redirect(url_for('login'))
+	elif "Administrative_unit" in session['department']:
+		if Type_path != None and (Type_path != "sends" and Type_path != "send") :
+			if "mailRs" == Type_path :
+				search=request.form['search']
+				data=mail.query.filter_by(To=session['department'] , From=search).all()
+				return render_template('Administrative_mailR.html', s=False, inf=data )
+			elif "mailSs" == Type_path :
+				search=request.form['search']
+				data=mail.query.filter_by(From=session['department'] , To=search).all()
+				return render_template('Administrative_mailR.html', s=True, inf=data )
+			elif "mailS" == Type_path :
+				data=mail.query.filter_by(From=session['department']).all()
+				return render_template('Administrative_mailS.html', s=True, inf=data )
+			elif "mailR" == Type_path :
+				data=mail.query.filter_by(To=session['department']).all()
+				return render_template('Administrative_mailR.html', s=False, inf=data )
 			else:
-				return render_template('admin_Add_studenat.html')
-
-# USES
-@app.route("/route", methods=['GET', 'POST'])
-def route():
-	if 'هندسة تقنيات الحاسوب' in session['department']:
-		try:
-			data=student.query.filter_by(department= session['department']).all()
-			return render_template('Show_Depa.html' , inf_dep=session['department'] , data=data)
-		except Exception as e:
-			return render_template('Show_Depa.html' , inf_dep=session['department'])
-	return render_template('cover.html')
-
+				return redirect(url_for('route_Administrative'))
+		elif Type_path == "sends":
+			f = request.files['file']
+			if f != None:
+					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+					From=request.form['From']
+					name=request.form['name']
+					To=request.form['To']
+					time=datetime.now()
+					us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
+					db.session.add(us)
+					db.session.commit()
+					return render_template('Administrative_send.html')
+		elif Type_path == "send":
+			return render_template('Administrative_send.html')
+		else:
+			return render_template('Administrative_main.html')
+	else:
+		return redirect(url_for('login'))
 # USES
 @app.route("/route_uint", methods=['GET', 'POST'])
 def route_uint():
 	if "Administrative_unit" in session['department']:
 		return redirect(url_for('Administrative_unit'))
 	return render_template('adding.html', inf = None )
+
 # USES
 @app.route("/SEND_uint", methods=['GET', 'POST'])
 def SEND_uint():
@@ -417,7 +450,7 @@ def search_student(dep12):
 
 
 # USES
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -429,10 +462,12 @@ def login():
 			if check_password_hash(data.password ,PassWord(password)):
 				session['username']= username
 				session['department']= data.department
-				if session['department'] in "adding" or "Administrative_unit" in session['department']:
+				if session['department'] in "adding":
 					return redirect(url_for('route_uint'))
 				elif session['department'] in "admin":
 					return redirect(url_for("route_page"))
+				elif session['department'] in "Administrative_unit" :
+					return redirect(url_for('route_Administrative'))
 				else:
 					return redirect(url_for("route_section"))
 				#if data.department == "admin":
@@ -507,13 +542,13 @@ def upload():
 '''
 @app.errorhandler(404)
 def page_not_found(e):
-	print(e)
 	return render_template('404.html'), 404
 
 if __name__ == '__main__':
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'), host="0.0.0.0")
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'))
 	app.run(debug=True , host="0.0.0.0")
+	#ipconfig
 	#--------CMD----------
 	#set FLASK_APP=run
 	#set FLASK_ENV=development

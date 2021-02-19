@@ -1,11 +1,8 @@
-{% extends "section_home.html" %}
-{% block meta %}
-<meta http-equiv="refresh" content="30">
-  {% endblock %}
+{% extends "Administrative_main.html" %}
          {% block body %}
-<center>
-  <div style="width:45%; margin-top: 100px">
-      <form action = "/route_section/send_file" method = "POST" enctype = "multipart/form-data">
+            <center>
+  <div style="width:45%;">
+      <form action = "/route_Administrative/mailRs" method = "POST" enctype = "multipart/form-data">
         <div class="form-group">
          <input list="brow" id="inputAddress0" required="required" type="search"  name="search" style="width:80%;height: 40px">
               <datalist id="brow">
@@ -28,23 +25,23 @@
     <table class="table" >
       <thead>
         <tr>
-    	  <th scope="col">تنزيل</th>
-    	  <th scope="col">الجهة المستلمة</th>
-    	  <th scope="col">الجهة المصدرة</th>
+          <th scope="col">تنزيل</th>
+          <th scope="col">الجهة المستلمة</th>
+          <th scope="col">الجهة المصدرة</th>
         <th scope="col">تاريخ الرفع</th>
-    	  <th scope="col">وقت الرفع</th>
-    	  <th scope="col">اسم الكتاب</th>
+          <th scope="col">وقت الرفع</th>
+          <th scope="col">اسم الكتاب</th>
         </tr>
       </thead>
       <tbody>
         {% for n in inf %}
         <tr>
-	        <th scope="row"><a href="../{{n.path}}" download="{{n.name_file}}">تنزيل</a></th>
-	        <td>{{n.To}}</td>
-	        <td>{{n.From}}</td>
-	        <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}} </td>
+            <th scope="row"><a href="../{{n.path}}" download="{{n.name_file}}">تنزيل</a></th>
+            <td>{{n.To}}</td>
+            <td>{{n.From}}</td>
+            <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}} </td>
           <td>{{n.Direct_Date.hour}}:{{n.Direct_Date.minute}}</td>
-	        <td>{{n.name}}</td>
+            <td>{{n.name}}</td>
         </tr>
          {% endfor %}
          
@@ -52,4 +49,4 @@
     </table>
   </div>
 </center>
-{% endblock %}
+       {% endblock %}
