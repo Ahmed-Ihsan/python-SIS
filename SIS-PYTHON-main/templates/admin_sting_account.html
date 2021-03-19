@@ -5,10 +5,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">تعديل</th>
-                                        <th scope="col">مستوى صلاحية</th>
-                                        <th scope="col">القسم</th>
                                         <th scope="col">اسم الحساب</th>
-                                        <th scope="col">ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -16,10 +13,7 @@
                                       {% if n.username != "ahmed1" %}
                                     <tr>
                                       <th scope="row"><a href="#"><img src="{{url_for('static', filename='image/images.png') }}" style="width: 15px"></a></th>
-                                      <td>{{n.level}}</td>
-                                      <td>{{n.department}}</td>
-                                      <td>{{n.username}}</td>
-                                      <td>{{n.id}}</td>
+                                      <td><b style="color: black;">{{n.username}}</b></td>
                                     </tr>
                                       {% endif %}
                                     {% endfor %}

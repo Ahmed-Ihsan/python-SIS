@@ -12,8 +12,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <style type="text/css">
             input{
-                text-align: right;
+                text-align: right; 
             }
+
         </style>
         {% block body %}
         <!--Custom css for chat pages -->
@@ -27,10 +28,63 @@
     <h1>تسجيل الدخول</h1>
     <form action = "/login" method = "POST" enctype = "multipart/form-data">
         <input type="text" name="username" placeholder="اسم المستخدم" required="required" />
-        <input type="password"  name="password"  placeholder="اكلمة المرور" required="required" /><center>
-        <button type="submit" class="btn btn-primary btn-block btn-large" style="margin: auto;">تسجيل الدخول</button></center>
+        <input type="password"  name="password"  placeholder="كلمة المرور" required="required" />
+        <div id="ru_pas" style="display: none;">
+            <input type="password"  name="newpassword" value="1" onkeyup="passw()" id="aaq" placeholder="كلمة المرور الجديدة" required="required" />
+            <input type="password" name="aginpassword" value="1" onkeyup="passw()" id="aaq2"  placeholder="اعد ادخال كلمة المرمر" required="required" />
+        </div>
+        <center>
+            <button type="submit" id="enter" class="btn btn-primary btn-block btn-large" style="margin: auto;">تسجيل الدخول</button>
+        </center>
     </form><br>
-    {{e}}
+    <center>
+        <button class="btn btn-primary btn-block btn-large" id="asw" onclick="myFunction()" style="margin: auto;">تغير كلمة المرور</button>
+        <button class="btn btn-primary btn-block btn-large" id="asw2" onclick="myFunction()" style="margin: auto;">رجوع</button>
+    </center>
+    
     {% endblock %}
+    <script type="text/javascript">
+        var bool = true;
+        var bool2 = true;
+        function myFunction() {
+            if (bool){
+                 document.getElementById("ru_pas").style.display= "block";
+                 document.getElementById("asw").style.display= "none";
+                 document.getElementById("asw2").style.display= "block";
+                 document.getElementById("aaq").value = "";
+                 document.getElementById("aaq2").value = "";
+                 bool = false;
+            }
+            else{
+                 document.getElementById("ru_pas").style.display= "none";
+                 document.getElementById("asw").style.display= "block";
+                 document.getElementById("asw2").style.display= "none";
+                 document.getElementById("aaq").value = "1";
+                 document.getElementById("aaq2").value = "1";
+                 bool = true;
+            }
+        }
+        if (bool2){
+             document.getElementById("asw2").style.display= "none";
+             document.getElementById("aaq").value = "1";
+             document.getElementById("aaq2").value = "1" ;
+             bool2 = false;
+         }
+
+         function passw(){
+             let L =document.getElementById("aaq").value ;
+             let X =document.getElementById("aaq2").value;
+             if (L != X) {
+                document.getElementById("aaq").style.color = "red";
+                document.getElementById("aaq2").style.color = "red";
+                document.getElementById("enter").style.display= "none";
+             }
+             else{
+                 document.getElementById("aaq").style.color = "green";
+                 document.getElementById("aaq2").style.color = "green";
+                 document.getElementById("enter").style.display= "block";
+             }
+         }
+    </script>
     </body>
 </html>
