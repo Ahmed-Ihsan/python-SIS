@@ -1,20 +1,23 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField
-from flask_wtf.csrf import CSRFProtect
-from wtforms.validators import DataRequired
-from flask import Flask ,render_template , request, redirect
-
-class MyForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
+import string
+import random
 
 
-app = Flask(__name__) 
-csrf = CSRFProtect(app)
 
-@app.route("/") 
-def hello(): 
-	form = MyForm()
-	return render_template('test.html' , form=form)
-  
-if __name__ == "__main__": 
-  app.run()
+def password_generator(length=8):
+
+    LETTERS = string.ascii_letters
+    NUMBERS = string.digits
+    # create alphanumerical from string constants
+    printable = f'{LETTERS}{NUMBERS}'
+
+    # convert printable from string to list and shuffle
+    printable = list(printable)
+    random.shuffle(printable)
+
+    # generate random password and convert to string
+    random_password = random.choices(printable, k=length)
+    random_password = ''.join(random_password)
+    return random_password
+
+a = password_generator()
+print(a)

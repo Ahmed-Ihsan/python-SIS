@@ -1,0 +1,27 @@
+{% extends "admin_sections.html" %}
+         {% block body %}
+           <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">تعديل</th>
+                                        <th scope="col">اسم الحساب</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  {% for n in inf %}
+                                      {% if n.username != "ahmed1" %}
+                                    <tr>
+                                      <th scope="row"><a href="#"><img src="{{url_for('static', filename='image/images.png') }}" style="width: 15px"></a></th>
+                                      <td><b style="color: black;">{{n.username}}</b></td>
+                                    </tr>
+                                      {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+       {% endblock %}
+
+    {% block script %}
+     
+    {% endblock %}

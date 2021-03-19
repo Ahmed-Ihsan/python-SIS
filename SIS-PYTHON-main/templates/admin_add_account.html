@@ -1,0 +1,67 @@
+{% extends "admin_sections.html" %}
+         {% block body %}
+<center>
+  <h1>كلية الحكمة الجامعة</h1>
+  <br>
+  <div>
+    <nav>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary">
+              <input type="radio" value="delete" id="a1" onclick="a1()" autocomplete="off"> حذف
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" value="upload" id="a2" onclick="a2()" autocomplete="off"> تعديل كلمة المرور
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio"value="search" id="a3" onclick="a3()" autocomplete="off"> بحث
+            </label>
+            <label class="btn btn-secondary active">
+              <input type="radio" value="insert" id="a4" onclick="a4()" autocomplete="off" checked> اضافة حساب                           </label>
+          </div>
+    </nav>
+  </div>
+  <br>
+  <h2 id="write"></h2>
+  <div>
+    <form action = "/admin" method = "POST" enctype = "multipart/form-data">
+     
+          <!--<select name="type"style="width:300px; " >
+            <option value="insert">اضافة حساب</option>
+            <option value="upload">تعديل كلمة المرور</option>
+            <option value="delete">حذف</option>
+            <option value="search">بحث</option>
+          </select>--><br>
+      <div id="input3">
+        <select name ="department" style="width:300px;" >
+        {% for n in ret2 %}
+        <option value="{{n}}">{{n}}</option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <select name ="le_el" style="width:300px;" >
+        <option value="1234">رئيس فسم</option>
+          <option value="123">مقرر القسم</option>
+          <option value="12">استاذ</option>
+          <option value="1">موظف</option>
+        </select>
+        <br><br>
+      </div>
+      <input type = "text" name = "username" required placeholder="اسم المستخدم" style="width:300px;"><br><br>
+      <input type="hidden" name="type" id="input1" value="insert" style="width:300px;">
+      <input type="pass" name="password" id="input2" required placeholder="كلمة المرور" style="width:300px;"><br>
+      <div class="col" ><button type="submit" onclick="a11()" class="btn btn-primary">ادخال</button></div>
+    </form>
+  </div>
+</center><br>
+<div id="ret"><center><h3 style="margin: auto;">
+  {% if (ret != "successfully") and (ret !='a') %}
+    <p>user name:{{ret[0]}}</p>
+    <p>password: {{ret[1]}}</p>
+  </h3><button class="btn btn-primary" onclick="del()" id="onret">حذف</button></center></div>
+  {% endif %}
+<p id="ret3"><p>
+{% endblock %}
+
+    {% block script %}
+     <script src="{{url_for('static', filename='style/admin_add_acc.js') }}"></script>
+    {% endblock %}

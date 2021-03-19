@@ -10,9 +10,14 @@ def PassWord(string):
 		new_pass=new_pass+str(hex(ord(i)))
 	return str(new_pass)
 
-data = User.query.all()
+data = Level.query.all()
+a=[]
 for n in data:
-   x=n.password
-   print(x)
-   a=check_password_hash(x , PassWord('admin'))
-   print(a)
+   print(n.department ,"      ",n.id,"  ", n.level,"   ",n.le_el)
+   a.append(n.department)
+a = list(dict.fromkeys(a))
+print(a)
+data = User.query.all()
+
+   #print(n.username ,"      ",n.password , "   ", n.Level_id)
+  
