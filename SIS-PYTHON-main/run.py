@@ -585,8 +585,8 @@ def page_not_found(e):
 if __name__ == '__main__':
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'), host="0.0.0.0")
 	#app.run(debug=True ,ssl_context=('cert.pem', 'key.pem'))
-	#app.run(debug=True , host="0.0.0.0")
-	app.run(debug=True)
+	app.run(debug=True , host="0.0.0.0")
+	#app.run(debug=True)
 	#ipconfig
 	#--------CMD----------
 	#set FLASK_APP=run
