@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash ,sen
 from werkzeug.security import check_password_hash , generate_password_hash
 from model import *
 from datetime import datetime
-from flask_wtf.csrf import CSRFProtect
+#from flask_wtf.csrf import CSRFProtect
 from flask_sslify import SSLify
 
 def PassWord(string):
