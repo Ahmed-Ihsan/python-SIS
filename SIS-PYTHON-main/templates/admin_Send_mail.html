@@ -2,8 +2,9 @@
          {% block body %}
 <div >
 <br>
-		<center><b><h1>ارسال بريد</h1></b></center>
-		<div style="width: 45%; margin: auto; ">
+  
+		<b><h1>ارسال بريد</h1></b>
+		<div style="width: 45%; ">
 		    <form action = "/route_page/send" method = "POST" enctype = "multipart/form-data">
 		        <div class="custom-file">
 		          <input type="file" class="custom-file-input" name ="file" id="customFile">
@@ -14,20 +15,41 @@
 		          <br>
 		          <input type="text" class="form-control" required name="name" placeholder="اسم الكتاب" >
 		          <br>
-		              {% for n in data %}
-					  <div class="form-check">
-						<input class="form-check-input" type="checkbox" name="{{n}}" value="{{n}}" id="{{n}}">
-						<label class="form-check-label" for="{{n}}">
-						  {{n}}
-						</label>
-					  </div>
-					  {% endfor %}
+		          <div>
+		          <div class="form-check form-switch">
+					  <input class="form-check-input" type="checkbox" id="qq">
+					  <label class="form-check-label" for="qq">هندسة تقنيات الحاسوب</label>
+					</div>
+					<div class="form-check form-switch">
+					  <input class="form-check-input" type="checkbox" id="qq1" >
+					  <label class="form-check-label" for="qq1">هندسة الاجهزة الطبية</label>
+					</div>
+					<div class="form-check form-switch">
+					  <input class="form-check-input" type="checkbox" id="qq2" >
+					  <label class="form-check-label" for="qq2">طب الاسنان</label>
+					</div>
+					<div class="form-check form-switch">
+					  <input class="form-check-input" type="checkbox" id="qq3" >
+					  <label class="form-check-label" for="qq3"> لغة العربية</label>
+					</div>
+					</div>
+		          <input type="text" list="browsers" class="form-control" required name="To" placeholder="الى" >
+		              <datalist id="browsers">
+		              <option  value="" />
+		              <option  value="" />
+		              <option  value="" />
+		              <option  value="" />
+		              <option  value="قانون" />
+		              <option  value="تحليلات" />
+		              <option  value="Administrative_unit" />
+		              </datalist>
 		              <br>
-		        <center><button type="submit" class="btn btn-primary" style="background: blue ;">ارسل </button></center>
+		        <button type="submit" class="btn btn-primary" style="background: blue">ارسل </button>
 		        <br>
 		        <br>
 		    </form>
 		</div>
+	
 </div>
 
        {% endblock %}
