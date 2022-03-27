@@ -1,0 +1,43 @@
+{% extends "admin_sections.html" %}
+         {% block body %}
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4"></h3>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form>
+                         <div class="row">
+                           <div class="col"><input style="height: 37px;" type="search" class="form-control form-control-sm" aria-controls="dataTable" required="required" placeholder="Search"></div>
+                           <div class="col"><button type="submit" class="btn btn-primary">بحث</button></div>
+                        </div>
+                       </form>
+                       <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">تنزيل</th>
+                                        <th scope="col">الجهة المستلمة</th>
+                                        <th scope="col">الجهة المصدرة</th>
+                                        <th scope="col">الوقت</th>
+                                        <th scope="col">التاريخ</th>
+                                        <th scope="col">الاسم</th>
+                                        <th scope="col">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr>
+                                      <th scope="row">1</th>
+                                      <td>Mark</td>
+                                      <td>Otto</td>
+                                      <td>@mdo</td>
+                                      <td>Jacob</td>
+                                      <td>Thornton</td>
+                                      <td>@fat</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}

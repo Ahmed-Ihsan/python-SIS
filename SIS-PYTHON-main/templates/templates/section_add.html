@@ -1,0 +1,22 @@
+{% extends "section_home.html" %}
+         {% block body %}
+
+         <center>
+<div style="width:55%; margin-top: 100px;">
+
+  <form action = "/route_section/add" method = "POST" enctype = "multipart/form-data">
+  <div class="form-group">
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="name1" type="text" placeholder="اسم الطالب"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="name2" type="text" placeholder="اسم الاب و الجد"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="email" type="email" placeholder="البريد الالكتروني للطالب"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="ph_num" type="tel" placeholder="رقم الهاتف"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="date_time" type="date" placeholder="تاريخ المباشرة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="address" type="text" placeholder="العنوان"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" value="{{db}}" name="department" type="hidden" placeholder="المرحلة">
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="level" type="text" placeholder="المرحلة">
+  </div>
+  <button type="submit" class="btn btn-primary">ارسل</button>
+</form>
+</div>
+</center>
+{% endblock %}

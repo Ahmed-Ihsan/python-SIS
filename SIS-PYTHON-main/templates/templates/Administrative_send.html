@@ -1,0 +1,32 @@
+{% extends "Administrative_main.html" %}
+         {% block body %}
+         <div >
+            <br>
+                    <center><b><h1>ارسال بريد</h1></b></center>
+                    <div style="width: 45%; margin: auto; ">
+                        <form action = "/route_Administrative/sends" method = "POST" enctype = "multipart/form-data">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name ="file" id="customFile">
+                              <label class="custom-file-label" for="customFile">ارسال بريد</label>
+                            </div>
+                            <br>
+                              <input type="hidden" class="form-control" required name="From" value="Administrative_unit" placeholder="من" >
+                              <br>
+                              <input type="text" class="form-control" required name="name" placeholder="اسم الكتاب" >
+                              <br>
+                                  {% for n in data %}
+                                  <div class="form-check" style="text-align: start;">
+                                    <input class="form-check-input" type="checkbox" name="{{n}}" value="{{n}}" id="{{n}}">
+                                    <label class="form-check-label" for="{{n}}">
+                                      {{n}}
+                                    </label>
+                                  </div>
+                                  {% endfor %}
+                                  <br>
+                            <center><button type="submit" class="btn btn-primary" style="background: blue ;">ارسل </button></center>
+                            <br>
+                            <br>
+                        </form>
+                    </div>
+            </div>
+{% endblock %}

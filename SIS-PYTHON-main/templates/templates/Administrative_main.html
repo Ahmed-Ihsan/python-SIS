@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style/Administrative/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/Administrative/css/sticky-dark-top-nav-with-dropdown.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/Administrative/css/styles.css') }}">
+    <style type="text/css">
+        input{
+  text-align: right;
+}
+    </style>
+</head>
+
+<body style="background: rgb(224,224,224);">
+    <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button" id="asd23" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+        <div class="container">
+            <div id="dive"><a class="navbar-brand" id="qw21" href="#"><span class="text-info" id="as2"><img src="{{url_for('static', filename='style/Administrative/img/PicsArt_01-01-07.53.34.png') }}">كلية الحكمة الجامعة</span> </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav nav-right">
+                    <li class="nav-item"><a class="nav-link active" href="/route_Administrative/send">ارسال بريد</a></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">البريد</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="/route_Administrative/mailR">البريد الوارد</a><a class="dropdown-item" href="/route_Administrative/mailS">البريد الصادر</a></div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">اضافة بيانات التدريس</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/route_Administrative2/table teacher"> بيانات التدريس</a></li>
+                </ul>
+                <p class="ml-auto navbar-text actions"> <a class="btn btn-light action-button" role="button" id="ae" href="/logout">تسجيل الخروج</a></p>
+        </div>
+        </div>
+    </nav>
+    <div class="media">
+        <div class="media-body" style="background: #fbfbfb;width: 250px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);text-align: center;">
+            <br>
+            {% block body %}
+            <h1 style="color: #33B8FF">كلية الحكمة الجامعة </h1>
+            <h3>قسم القانونية و الادارية</h3>
+            <p>نظام اتصال بين الاقسام الادارية و الدراسية لتبادل البيانات  اسرع و اسهل</p>
+            <center>
+            <div style="padding: 1%;">
+                <img style="height: 300px;width: 350px;" src="{{url_for('static', filename='style/Administrative/img/PicsArt_01-01-07.53.34.png') }}">
+            </div></center>
+            {% endblock %}
+        </div>
+    </div>
+    <div></div>
+    <script src="{{url_for('static', filename='style/Administrative/js/jquery.min.js') }}"></script>
+    <script src="{{url_for('static', filename='style/Administrative/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% block meta %}
+  {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{{db}}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style/sections/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/sections/css/Footer-Basic.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/sections/css/smoothproducts.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style type="text/css">
+      input{
+        text-align: right;
+      }
+      th , td , tr{
+        text-align: right;
+      }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" id="as">
+        <div class="container"><a class="navbar-brand text-primary logo" href="#">كلية الحكمة الجامعة</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section/received_file">البريد الوارد</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section/send_file">البريد الصادر</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section/search">البحث عن بيانات الطلاب</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section/add">اضافة معلومات الطالب</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section/sendMail">ارسال بريد</a></li>
+                </ul>
+                 <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/route_section">الصفحة الرئيسية</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/logout">تسجيل الخروج</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    {% block body %}
+    <main class="page">
+        <section class="clean-block features">
+          <div class="container" >
+            <div class="block-heading">
+              <div style="float: right;margin-bottom:10px">
+                <h2 class="text-info" id="as3">{{db}}</h2>
+                <label id="as4">&nbsp;نظام الاتصال بين الاقسام الدراسية سهل الاستحدام زسادة سرعة تبادل البيانات بين مختلف الاقسام الدراسية</label>
+                <img style="height: 200px; width: 250px;" class="imges" src="{{url_for('static', filename='style/Administrative/img/PicsArt_01-01-07.53.34.png') }}">
+              </div>
+            </div>
+            <center> 
+              <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table" >
+                  <thead>
+                    <tr>
+                      <th scope="col">المرحلة</th> 
+                      <th scope="col">القسم</th>
+                      <th scope="col">العنوان</th>
+                      <th scope="col">رقم الهاتف</th>
+                      <th scope="col">الايميل</th>
+                      <th scope="col">وقت المباشرة</th>
+                      <th scope="col">اسم الاب و الجد</th>
+                      <th scope="col">اسم الطالب</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for n in data %}
+                    <tr>
+                      <td>{{n.level}}</td>
+                      <td>{{n.department}}</td>
+                      <td>{{n.Address}}</td>
+                      <td>{{n.phonenumber}}</td>
+                      <td>{{n.Email}}</td>
+                      <td>{{n.Direct_Date.year}}/{{n.Direct_Date.month}}/{{n.Direct_Date.day}}</td>
+                      <td>{{n.lestname}}</td>
+                      <th scope="row"><a href="/Add_Degree">{{n.firstname}}</a></th>
+                    </tr>
+                     {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </center>
+          </div>
+        </section>
+
+    </main>
+    <div class="footer-basic" ><footer> <p class="copyright">كلية الحكمة الجامعة © 2021</p></footer></div>
+    {% endblock %}
+    <script src="{{url_for('static', filename='style/sections/js/jquery.min.js') }}"></script>
+    <script src="{{url_for('static', filename='style/sections/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="{{url_for('static', filename='style/sections/js/smoothproducts.min.js') }}"></script>
+    <script src="{{url_for('static', filename='style/sections/js/theme.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+{% extends "section_home.html" %}
+         {% block body %}
+<center>
+  <div style="width:45%; margin-top: 100px">
+      <form action = "/search_student/{{deep}}" method = "POST" enctype = "multipart/form-data">
+        <div class="form-group">
+         <input list="brow" id="inputAddress0" required="required" type="search"  name="search" style="width:80%;height: 40px">
+              <datalist id="brow">
+                {% for n2 in info_all %}
+                {% if n2.department in deep %}
+                <option value="{{n2.id}}">{{n2.firstname}}{{n2.lestname}} </option>{% endif %} {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">ارسل</button>
+      </form>
+  </div>
+</center>
+{% if None != info_fil %}
+<center>
+  <div style="width: 85%" class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" >
+    <table class="table" >
+      <thead>
+        <tr>
+          <th scope="col">المرحلة</th> 
+          <th scope="col">القسم</th>
+          <th scope="col">العنوان</th>
+          <th scope="col">رقم الهاتف</th>
+          <th scope="col">الايميل</th>
+          <th scope="col">وقت المباشرة</th>
+          <th scope="col">اسم الاب و الجد</th>
+          <th scope="col">اسم الطالب</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for n in info_fil %}
+        {% if n.department in deep %}
+        <tr>
+          <td>{{n.level}}</td>
+          <td>{{n.department}}</td>
+          <td>{{n.Address}}</td>
+          <td>{{n.phonenumber}}</td>
+          <td>{{n.Email}}</td>
+          <td>{{n.Direct_Date.year}}/{{n.Direct_Date.month}}/{{n.Direct_Date.day}}</td>
+          <td>{{n.lestname}}</td>
+          <th scope="row"><a href="#">{{n.firstname}}</a></th>
+        </tr>
+        {% endif %}
+         {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</center>
+{% endif %}
+
+{% if None != info_fil %}
+<center>
+  <div style="width:45%;">
+    {% for n in info_fil %}
+      <form action = "/upl_inf_stu/{{n.id}}" method = "POST" enctype = "multipart/form-data">
+        {% endfor %}
+        <div class="form-group" >
+          
+        {% for n in info_fil %}
+        {% if n.department in deep %}
+        <input class="form-control" type="text" name="name1" value="{{n.firstname}}" placeholder="{{n.firstname}}">
+        <input class="form-control" type="text" name="name2" value="{{n.lestname}}" placeholder="{{n.lestname}}">
+        <input class="form-control" type="date" required name="time" value="{{n.Direct_Date}}" placeholder="{{n.Direct_Date}}">
+        <input class="form-control" type="email" name="email" value="{{n.Email}}" placeholder="{{n.Email}}">
+        <input class="form-control" type="tel" name="num_ph" value="{{n.phonenumber}}" placeholder="{{n.phonenumber}}">
+        <input class="form-control" type="text" name="address" value="{{n.Address}}" placeholder="{{n.Address}}">
+        <input class="form-control" type="text" name="department" value="{{n.department}}" placeholder="{{n.department}}">
+        <input class="form-control" type="text" name="level" value="{{n.level}}" placeholder="{{n.level}}">
+        </div>
+        <button type="submit" class="btn btn-primary">تعديل</button>
+      </form>
+  </div>
+</center>
+<br>
+ <center>
+   <div style="width: 45%; ">
+    <form action = "/upl_file/{{n.department}}/{{n.id}}" method = "POST" enctype = "multipart/form-data">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name ="file" id="customFile">
+          <label class="custom-file-label" for="customFile">رفع ملف</label>
+          <input type="hidden" value="student" name="typefile" >
+          <br><br>
+        </div>
+          <button type="submit" class="btn btn-primary">رفع</button>
+    </form>
+  </div>
+</center>
+
+<center>
+  <form action = "/upl_inf_stu/delete/{{n.department}}/{{n.id}}" method = "POST" enctype = "multipart/form-data">
+    <br><button type="submit" class="btn btn-primary">حذف</button> 
+    <input type="checkbox" required id="vehicle1" name="vehicle1" value="Bike">
+    <label for="vehicle1" style="color:#fff">تاكيد</label><br>
+  </form>
+</center>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

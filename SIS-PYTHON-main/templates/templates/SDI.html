@@ -1,0 +1,67 @@
+{% extends "login_page.html" %}
+         {% block body %}
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sia.css') }}">
+  
+    </head>
+    <body>
+         <center><div style="width: 60%; ">
+         	
+         	<form action = "/SDId" method = "POST" enctype = "multipart/form-data">
+         	<div>
+         	<label for="inputAddress0">search</label>
+         	<input list="brow" id="inputAddress0" name="search">
+				<datalist id="brow">
+					{% for n in student %}
+  				<option value="{{n.id}}">{{n.firstname}} {{n.lestname}}</option>{% endfor %}
+         	</div>
+         	<div class="form-group">
+		    <label for="inputAddress2">class 1</label>
+		    <input type="number" class="form-control" id="inputAddress2" name="class1" >
+		  </div>
+		   <div class="form-group">
+		    <label for="inputAddress2">class 2</label>
+		    <input type="number" class="form-control" id="inputAddress2" name="class2" >
+		  </div>
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label for="inputEmail4">class 3</label>
+		      <input type="number" class="form-control" id="inputEmail4" name="class3">
+		    </div>
+		    <div class="form-group col-md-6">
+		      <label for="inputPassword4">class 4</label>
+		      <input type="number" class="form-control" id="inputPassword4" name="class4">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputAddress">class 5</label>
+		    <input type="number" class="form-control" id="inputAddress" name="class5" >
+		  </div>
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label for="inputCity">class 6</label>
+		      <input type="number" class="form-control" id="inputCity" name="class6">
+		    </div>
+		    <div class="form-group col-md-6">
+		      <label for="inputCity">class 7</label>
+		      <input type="number" class="form-control" id="inputCity" name="class7">
+		    </div>
+		     <div class="form-group col-md-6">
+		      <label for="inputCity">class 8</label>
+		      <input type="number" class="form-control" id="inputCity" name="class8">
+		    </div>
+		    <input type="hidden" id="department" name="department" >
+		    <input type="hidden" id="id" name="id" >
+            <script>
+                var room=sessionStorage.getItem("department");
+                var roomu=sessionStorage.getItem("id");
+                document.querySelector('#department').value=room;
+                 document.querySelector('#id').value=roomu;
+                 window.alert("{{e}}")
+            </script>
+		  </div>
+		  <button type="submit" class="btn btn-primary">submit</button>
+		</form>
+
+         </div></center>
+ {% endblock %}

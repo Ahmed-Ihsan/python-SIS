@@ -1,0 +1,32 @@
+{% extends "login_page.html" %}
+         {% block body %}
+        <!-- Custom css for chat pages  -->
+        <link rel="stylesheet" href="{{url_for('static', filename='style/started.css') }}" >
+       <style >
+        body{
+         background-image: url("{{ url_for('static', filename='image/pexels-leonardo-vazquez-3591570.jpg')}}");
+       }
+       </style>
+  
+    </head>
+    <body id="e1" style="height: 100%; width: 100%">
+<center>
+<div style="width:45%; margin-top: 1%">
+    <form action = "/Add_Degree" method = "POST" enctype = "multipart/form-data">
+  <div class="form-group">
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="student_name" type="text" placeholder="اسم الطالب"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_1" type="number" placeholder="درجة المادة الاولى"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_2" type="number" placeholder="درجة المادة الثانية"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_3" type="number" placeholder="درجة المادة الثالثة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_4" type="number" placeholder="درجة المادة الرابعة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_5" type="number" placeholder="درجة المادة الخامسة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_6" type="number" placeholder="درجة المادة لسادسة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="class_7" type="number" placeholder="درجة المادة السابعة"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="department" type="text" placeholder="القسم"><br>
+    <input style="text-align: right;" required="required" class="form-control form-control-lg" name="level" type="text" placeholder="المرحلة">
+  </div>
+  <button type="submit" class="btn btn-primary">ارسل</button>
+</form>
+</div>
+</center>
+{% endblock %}

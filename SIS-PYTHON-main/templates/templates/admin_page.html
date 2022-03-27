@@ -1,0 +1,37 @@
+{% extends "login_page.html" %}
+         {% block body %}
+    </head>
+    <body>
+         <h1>Admin page</h1>
+        <form action = "/admin" method = "POST" enctype = "multipart/form-data">
+         <input type = "text" name = "username" placeholder="User name"/><br>
+         <input type = "text" name = "data" placeholder="password"/><br>
+             <select name="type">
+                <option value="insert">insert</option>
+                <option value="upload">upload</option>
+                <option value="delete">delete</option>
+                <option value="search">search</option>
+              </select>
+              <select name ="department" >
+                <option value="computer">computer</option>
+                <option value="arabic">arabic</option>
+              </select><br>
+         <input type = "submit"/>
+         </form>
+            <br>
+         <form action = "/upload_file" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file"  name ="file" /><br>
+         <select name ="debartment" >
+                <option value="computer">computer</option>
+                <option value="arabic">arabic</option>
+        </select><br>
+         <input type = "submit"/>
+         </form>
+
+         <p>{{ret}}<br>{{e}}</p>
+         {% for data in all_data %}
+         <p>{{data.username}}</p><br>
+         {% endfor %}
+
+{% endblock %}

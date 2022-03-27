@@ -1,0 +1,57 @@
+{% extends "section_home.html" %}
+
+{% block meta %}
+<meta http-equiv="refresh" content="30">
+  {% endblock %}
+
+         {% block body %}
+<center>
+  <div style="width:45%; margin-top: 100px">
+      <form action = "/route_section/received_file" method = "POST" enctype = "multipart/form-data">
+        <div class="form-group">
+         <input list="brow" id="inputAddress0" required="required" type="search"  name="search" style="width:80%;height: 40px">
+              <datalist id="brow">
+                {% if send %}
+                {% for n in inf %}
+                <option value="{{n.To}}"></option>{% endfor %}
+                {% else %}
+                {% for n in inf %}
+                <option value="{{n.From}}"></option>{% endfor %}
+                {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">ارسل</button>
+      </form>
+  </div>
+</center> 
+<br>
+
+<center>
+  <div style="width: 85%">
+    <table class="table" >
+      <thead>
+        <tr>
+    	  <th scope="col">تنزيل</th>
+    	  <th scope="col">الجهة المستلمة</th>
+    	  <th scope="col">الجهة المصدرة</th>
+        <th scope="col">تاريخ الرفع</th>
+    	  <th scope="col">وقت الرفع</th>
+    	  <th scope="col">اسم الكتاب</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in inf %}
+        <tr>
+	        <th scope="row"><a href="../{{n.path}}" download="{{n.name_file}}">تنزيل</a></th>
+	        <td>{{n.To}}</td>
+	        <td>{{n.From}}</td>
+	        <td>{{n.Direct_Date.year}} / {{n.Direct_Date.month}} / {{n.Direct_Date.day}} </td>
+          <td>{{n.Direct_Date.hour}}:{{n.Direct_Date.minute}}</td>
+	        <td>{{n.name}}</td>
+        </tr>
+         {% endfor %}
+         
+      </tbody>
+    </table>
+  </div>
+</center>
+{% endblock %}
