@@ -8,14 +8,14 @@ db = SQLAlchemy(app)
 
 __tablename__ = "users"
 
-class User( db.Model):
+class User( db.Model):  #uses
 	"""user"""
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(25), unique=True, nullable=False)
 	password = db.Column(db.String(), nullable=False)
 	Level_id =  db.Column(db.Integer, nullable=False)
 
-class Level(db.Model):
+class Level(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	level = db.Column(db.String(), nullable=False)
 	le_el = db.Column(db.String(), nullable=False)
@@ -40,14 +40,14 @@ class Bookname(db.Model):
 	path = db.Column(db.String(), nullable=False)
 	department = db.Column(db.String(), nullable=False)
 
-class student_file(db.Model):
+class student_file(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	path = db.Column(db.String(), nullable=False)
 	student_id= db.Column(db.Integer, nullable=False)
 	department = db.Column(db.String(), nullable=False)
 	type_file = db.Column(db.String(), nullable=False)
 
-class mail(db.Model):
+class mail(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	name_file=db.Column(db.String(), nullable=False)
 	name= db.Column(db.String(), nullable=False)
@@ -56,17 +56,30 @@ class mail(db.Model):
 	To = db.Column(db.String(), nullable=False)
 	From = db.Column(db.String(), nullable=False)
 
-class teacher(db.Model):
+class teacher(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	name= db.Column(db.String(), nullable=False)
-
-class teacher_inf(db.Model):
+	
+class Vacations(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
-	teacher_id= db.Column(db.Integer, nullable=False)
-	Vacations=db.Column(db.String(), nullable=False)
+	name=db.Column(db.String(), nullable=False)
+	name.file= db.Column(db.String(), nullable=False)
 	book_thi= db.Column(db.String(), nullable=False)
-	Notice=db.Column(db.String(), nullable=False)
-	Punishment=db.Column(db.String(), nullable=False)
+	teacher_id= db.Column(db.Integer, nullable=False)
+
+class Notice(db.Model): #uses
+	id = db.Column(db.Integer, primary_key=True)
+	name=db.Column(db.String(), nullable=False)
+	name.file= db.Column(db.String(), nullable=False)
+	book_thi= db.Column(db.String(), nullable=False)
+	teacher_id= db.Column(db.Integer, nullable=False)
+
+class Punishment(db.Model): #uses
+	id = db.Column(db.Integer, primary_key=True)
+	name=db.Column(db.String(), nullable=False)
+	name.file= db.Column(db.String(), nullable=False)
+	book_thi= db.Column(db.String(), nullable=False)
+	teacher_id= db.Column(db.Integer, nullable=False)
 
 class cost(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -74,7 +87,7 @@ class cost(db.Model):
 	cost = db.Column(db.Integer, nullable=False)
 	level = db.Column(db.String(), nullable=False)
 
-class Department(db.Model):
+class Department(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(), nullable=False)
 	Day = db.Column(db.String(), nullable=False)
@@ -82,7 +95,7 @@ class Department(db.Model):
 	teacher = db.Column(db.Integer, nullable=False)
 	level = db.Column(db.String(), nullable=False)
 
-class student(db.Model):
+class student(db.Model): #uses
 	id = db.Column(db.Integer, primary_key=True)
 	firstname = db.Column(db.String(), nullable=False)
 	lestname = db.Column(db.String(), nullable=False)
@@ -93,7 +106,7 @@ class student(db.Model):
 	department = db.Column(db.String(), nullable=False)
 	level = db.Column(db.String(), nullable=False)
 
-class d(db.Model):
+class d(db.Model): #uses 
 	id = db.Column(db.Integer, primary_key=True)
 	student_name = db.Column(db.String(), nullable=False)
 	class_1 = db.Column(db.String(), nullable=False)

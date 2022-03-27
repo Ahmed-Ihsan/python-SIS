@@ -30,8 +30,8 @@
         <input type="text" name="username" placeholder="اسم المستخدم" required="required" />
         <input type="password"  name="password"  placeholder="كلمة المرور" required="required" />
         <div id="ru_pas" style="display: none;">
-            <input type="password"  name="newpassword" value="1" onkeyup="passw()" id="aaq" placeholder="كلمة المرور الجديدة" required="required" />
-            <input type="password" name="aginpassword" value="1" onkeyup="passw()" id="aaq2"  placeholder="اعد ادخال كلمة المر,ر" required="required" />
+            <input type="password"  name="newpassword" value="1" id="aaq" placeholder="كلمة المرور الجديدة" required="required" />
+            <input type="password" name="aginpassword" value="1" onkeyup="passw()" id="aaq2"  placeholder="اعد ادخال كلمة المرمر" required="required" />
         </div>
         <center>
             <button type="submit" id="enter" class="btn btn-primary btn-block btn-large" style="margin: auto;">تسجيل الدخول</button>
@@ -46,6 +46,7 @@
     <script type="text/javascript">
         var bool = true;
         var bool2 = true;
+        
         function myFunction() {
             if (bool){
                  document.getElementById("ru_pas").style.display= "block";
@@ -58,6 +59,7 @@
             else{
                  document.getElementById("ru_pas").style.display= "none";
                  document.getElementById("asw").style.display= "block";
+                 document.getElementById("enter").style.display= "block";
                  document.getElementById("asw2").style.display= "none";
                  document.getElementById("aaq").value = "1";
                  document.getElementById("aaq2").value = "1";
@@ -71,7 +73,7 @@
              bool2 = false;
          }
 
-         function passw(){
+         function passw(asd=1){
              let L =document.getElementById("aaq").value ;
              let X =document.getElementById("aaq2").value;
              if (L != X) {
@@ -87,4 +89,4 @@
          }
     </script>
     </body>
-</html>
+</html

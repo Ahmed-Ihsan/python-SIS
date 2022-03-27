@@ -193,14 +193,16 @@ def route_page(Type_path=None):
 	else:
 		return redirect(url_for('login'))
 
-
-@app.route("/route_Administrative", methods=['GET', 'POST'])
-@app.route("/route_Administrative/<Type_path>", methods=['GET', 'POST'])
-def route_Administrative(Type_path=None):
+@app.route("/route_Administrative/<Type_path>/<type2>", methods=['GET','POST'])
+@app.route("/route_Administrative", methods=['GET' ,'POST'])
+def route_Administrative(Type_path=None,type2=None):
+	print(200)
 	if not ('username' in session):
 		return redirect(url_for('login'))
-	elif "Administrative_unit" in session['department']:
-		if Type_path != None and (Type_path != "sends" and Type_path != "send") :
+	print(202)
+	if "Administrative_unit" in session['department']:
+		a=['adding','هندسة تقنيات الحاسوب','Administrative_unit','هندسة الاجهزة الطبية','طب الاسنان','لغة العربية','قانون','تحليلات']
+		if Type_path != None and (Type_path != "sends" and Type_path != "send"):
 			if "mailRs" == Type_path :
 				search=request.form['search']
 				data=mail.query.filter_by(To=session['department'] , From=search).order_by(mail.id.desc()).all()
@@ -215,27 +217,86 @@ def route_Administrative(Type_path=None):
 			elif "mailR" == Type_path :
 				data=mail.query.filter_by(To=session['department']).order_by(mail.id.desc()).all()
 				return render_template('Administrative_mailR.html', s=False, inf=data )
-			else:
-				return redirect(url_for('route_Administrative'))
-		elif Type_path == "sends":
-			f = request.files['file']
-			if f != None:
+		elif request.method == 'POST':
+			if Type_path == "sends":
+				f = request.files['file']
+				if f != None:
 					f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
 					save_file=os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
 					From=request.form['From']
 					name=request.form['name']
-					To=request.form['To']
 					time=datetime.now()
-					us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=To , From=From )
-					db.session.add(us)
+					us1=[]
+					for i in a:
+						try:
+							f1 = request.form[i]
+						except Exception as e:
+							f1= None
+						if f1 != None:
+							us=mail(path=save_file, name_file=f.filename , name=name , Direct_Date=time , To=f1 , From=From )
+							us1.append(us)
+					for i in us1:
+						db.session.add(i)
 					db.session.commit()
-					return render_template('Administrative_send.html')
-		elif Type_path == "send":
-			return render_template('Administrative_send.html')
+					return render_template('Administrative_send.html' , data=a)
+				elif "add" in type2 :
+					if type2 == "addtable":
+						data=teacher.query.order_by(teacher.name.asc()).all()
+						return render_template('Administrative_main.html' , inf=data)
+					elif type2 == "addVacations":
+						data=Vacations.query.order_by(Vacations.name.asc()).all()
+						return render_template('Administrative_main.html' , inf=data)
+					elif type2 == "addNotice":
+						data=Notice.query.order_by(Notice.name.asc()).all()
+						return render_template('Administrative_main.html' , inf=data)
+					elif type2 == "addPunishment":
+						data=Punishment.query.order_by(Punishment.name.asc()).all()
+						return render_template('Administrative_main.html' , inf=data)
+					else:
+						return render_template('Administrative_main.html')
+
+		if Type_path == "send":
+			return render_template('Administrative_send.html' ,data=a)
+		elif Type_path == "tecinf":
+			print(261)
+			if type2 in "table":
+				if type2 == "table":
+					data=teacher.query.order_by(teacher.name.asc()).all()
+					return render_template('Administrative_table.html' , inf=data)
+				elif type2 == "tableVacations":
+					data=Vacations.query.order_by(Vacations.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				elif type2 == "tableNotice":
+					data=Notice.query.order_by(Notice.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				elif type2 == "tablePunishment":
+					data=Punishment.query.order_by(Punishment.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				else:
+					return render_template('Administrative_main.html')
+			elif "add" in type2 :
+				print(277)
+				if type2 == "addtable":
+					data=teacher.query.order_by(teacher.name.asc()).all()
+					return render_template('Administrative_add_tech.html' , inf=data)
+				elif type2 == "addVacations":
+					data=Vacations.query.order_by(Vacations.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				elif type2 == "addNotice":
+					data=Notice.query.order_by(Notice.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				elif type2 == "addPunishment":
+					data=Punishment.query.order_by(Punishment.name.asc()).all()
+					return render_template('Administrative_main.html' , inf=data)
+				else:
+					return render_template('Administrative_main.html')
+			else:
+				return render_template('Administrative_main.html')
 		else:
 			return render_template('Administrative_main.html')
 	else:
 		return redirect(url_for('login'))
+
 # USES
 @app.route("/route_uint", methods=['GET', 'POST'])
 def route_uint():

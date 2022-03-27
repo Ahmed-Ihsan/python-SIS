@@ -1,0 +1,32 @@
+{% extends "Administrative_main.html" %}
+         {% block body %}
+            <center>
+  <div style="width:45%;">
+  </div>
+</center> 
+<br>
+
+<center>
+  <div style="width: 85%">
+    <table class="table" style="text-align: right;">
+      <thead>
+        <tr>
+          <th scope="col">عقوبات</th>
+          <th scope="col">كتب شكر</th>
+          <th scope="col">اسم الاستاذ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in inf %}
+        <tr>
+          <td><a href="#">next</a></td>
+          <td><a href="#">next</a></td>
+          <td>{{n.name}}</td>
+        </tr>
+         {% endfor %}
+         
+      </tbody>
+    </table>
+  </div>
+</center>
+       {% endblock %}

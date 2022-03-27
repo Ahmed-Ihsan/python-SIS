@@ -25,7 +25,7 @@ def main():
 	db.session.add(us411)
 	us1=User(username='ahmed0' , password=generate_password_hash(PassWord("admin")) , Level_id="1")
 	db.session.add(us1)
-	us2=User(username='ahmed1' , password=generate_password_hash(PassWord("admin")) , Level_id="33")
+	us2=User(username='admin' , password=generate_password_hash(PassWord("admin")) , Level_id="33")
 	db.session.add(us2)
 	us3=User(username='ahmed2' , password=generate_password_hash(PassWord("admin")) , Level_id="5")
 	db.session.add(us3)
